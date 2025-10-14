@@ -4,6 +4,8 @@ import Header from '../components/Header';
 import GameOverOverlay from '../components/GameOverOverlay';
 import WinOverlay from '../components/WinOverlay';
 import HelpModal from '../components/HelpModal';
+import StatsModal from '../components/StatsModal';
+import GameControls from '../components/GameControls';
 import { GRID_SIZE } from '../constants';
 import type { TileType } from '../types';
 
@@ -36,10 +38,25 @@ const Game2048Screen: React.FC = () => {
   const [isMoving, setIsMoving] = useState(false);
   const [history, setHistory] = useState<GameState[]>([]);
   const [showHelp, setShowHelp] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+
+  // New stats state
+  const [highestTile, setHighestTile] = useState(0);
+  const [gamesWon, setGamesWon] = useState(0);
+  const [winStreak, setWinStreak] = useState(0);
 
   useEffect(() => {
     const savedHighScore = localStorage.getItem('2048-highscore');
     setHighScore(savedHighScore ? parseInt(savedHighScore, 10) : 0);
+
+    const savedHighestTile = localStorage.getItem('2048-highest-tile');
+    setHighestTile(savedHighestTile ? parseInt(savedHighestTile, 10) : 0);
+
+    const savedGamesWon = localStorage.getItem('2048-games-won');
+    setGamesWon(savedGamesWon ? parseInt(savedGamesWon, 10) : 0);
+
+    const savedWinStreak = localStorage.getItem('2048-win-streak');
+    setWinStreak(savedWinStreak ? parseInt(savedWinStreak, 10) : 0);
   }, []);
 
   const toGrid = (tileArray: TileType[]): (TileType | null)[][] => {
@@ -203,21 +220,37 @@ const Game2048Screen: React.FC = () => {
             const tilesWithNew = addRandomTile(tilesAfterMove);
             setTiles(tilesWithNew);
 
+            const maxTile = Math.max(0, ...tilesWithNew.map(t => t.value));
+            if (maxTile > highestTile) {
+              setHighestTile(maxTile);
+              localStorage.setItem('2048-highest-tile', maxTile.toString());
+            }
+
             if (!won) {
               const hasWon = tilesWithNew.some(tile => tile.value === 2048);
               if (hasWon) {
                 setWon(true);
+                const newGamesWon = gamesWon + 1;
+                const newWinStreak = winStreak + 1;
+                setGamesWon(newGamesWon);
+                setWinStreak(newWinStreak);
+                localStorage.setItem('2048-games-won', newGamesWon.toString());
+                localStorage.setItem('2048-win-streak', newWinStreak.toString());
               }
             }
 
             if (!canMove(tilesWithNew)) {
                 setGameOver(true);
+                if (!won) {
+                  setWinStreak(0);
+                  localStorage.setItem('2048-win-streak', '0');
+                }
             }
             setIsMoving(false);
         }, 150);
       }
     },
-    [tiles, score, moves, isMoving, gameOver, won, addRandomTile, canMove, updateScore]
+    [tiles, score, moves, isMoving, gameOver, won, addRandomTile, canMove, updateScore, highestTile, gamesWon, winStreak]
   );
   
   const handleUndo = useCallback(() => {
@@ -299,10 +332,6 @@ const Game2048Screen: React.FC = () => {
         score={score}
         highScore={highScore}
         moves={moves}
-        onNewGame={startNewGame}
-        onUndo={handleUndo}
-        canUndo={history.length > 0 && !isMoving}
-        onHelp={() => setShowHelp(true)}
       />
       <div className="relative">
         <GameBoard tiles={tiles} />
@@ -314,7 +343,22 @@ const Game2048Screen: React.FC = () => {
           />
         )}
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+        {showStats && (
+          <StatsModal 
+            highestTile={highestTile}
+            gamesWon={gamesWon}
+            winStreak={winStreak}
+            onClose={() => setShowStats(false)} 
+          />
+        )}
       </div>
+      <GameControls
+        onNewGame={startNewGame}
+        onUndo={handleUndo}
+        canUndo={history.length > 0 && !isMoving}
+        onHelp={() => setShowHelp(true)}
+        onStats={() => setShowStats(true)}
+      />
     </div>
   );
 };
