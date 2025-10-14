@@ -292,7 +292,7 @@ const Game2048Screen: React.FC = () => {
       className="flex flex-col items-center justify-start font-sans select-none w-full"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      style={{'--tile-gap': '0.5rem'} as React.CSSProperties}
+      style={{'--tile-gap': '0.5rem', touchAction: 'none'} as React.CSSProperties}
     >
       <style>{`:root { @media (min-width: 640px) { --tile-gap: 1rem; } }`}</style>
       <Header
