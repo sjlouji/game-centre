@@ -14,7 +14,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, description, visual, status,
   return (
     <div
       className={`game-card group relative bg-slate-900 rounded-lg overflow-hidden border border-slate-700 shadow-lg ${
-        isAvailable ? 'cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1' : 'cursor-default'
+        isAvailable ? 'cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1' : 'cursor-default'
       } ${status === 'coming-soon' ? 'game-card-coming-soon' : ''}`}
       onClick={isAvailable ? onPlay : undefined}
     >

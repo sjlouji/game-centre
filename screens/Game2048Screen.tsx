@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import GameBoard from '../components/GameBoard';
 import Header from '../components/Header';
 import GameOverOverlay from '../components/GameOverOverlay';
@@ -8,6 +8,13 @@ import StatsModal from '../components/StatsModal';
 import GameControls from '../components/GameControls';
 import { GRID_SIZE } from '../constants';
 import type { TileType } from '../types';
+
+// Helper function for haptic feedback
+const triggerHaptic = (pattern: number | number[]) => {
+  if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+    window.navigator.vibrate(pattern);
+  }
+};
 
 const Game2048Screen: React.FC = () => {
   let tileIdCounter = 1;
@@ -198,6 +205,12 @@ const Game2048Screen: React.FC = () => {
       grid = rotateGrid(newGrid, (4 - numRotations) % 4);
 
       if (hasMoved) {
+        if (totalScoreGained > 0) {
+          triggerHaptic([40, 20, 40]); // Merge feedback
+        } else {
+          triggerHaptic(20); // Move feedback
+        }
+
         const prevState = { tiles, score, moves };
         setHistory(h => [...h, prevState]);
         setMoves(m => m + 1);
@@ -226,28 +239,31 @@ const Game2048Screen: React.FC = () => {
               localStorage.setItem('2048-highest-tile', maxTile.toString());
             }
 
-            if (!won) {
-              const hasWon = tilesWithNew.some(tile => tile.value === 2048);
-              if (hasWon) {
-                setWon(true);
-                const newGamesWon = gamesWon + 1;
-                const newWinStreak = winStreak + 1;
-                setGamesWon(newGamesWon);
-                setWinStreak(newWinStreak);
-                localStorage.setItem('2048-games-won', newGamesWon.toString());
-                localStorage.setItem('2048-win-streak', newWinStreak.toString());
-              }
+            const justWon = !won && tilesWithNew.some(tile => tile.value === 2048);
+            if (justWon) {
+              setWon(true);
+              triggerHaptic([100, 30, 100, 30, 100]); // Win haptic
+              const newGamesWon = gamesWon + 1;
+              const newWinStreak = winStreak + 1;
+              setGamesWon(newGamesWon);
+              setWinStreak(newWinStreak);
+              localStorage.setItem('2048-games-won', newGamesWon.toString());
+              localStorage.setItem('2048-win-streak', newWinStreak.toString());
             }
 
             if (!canMove(tilesWithNew)) {
                 setGameOver(true);
-                if (!won) {
-                  setWinStreak(0);
-                  localStorage.setItem('2048-win-streak', '0');
+                if (justWon) {
+                    // User won on the last possible move. Win haptic is enough.
+                } else {
+                    // User lost.
+                    triggerHaptic(200); // Game over haptic
+                    setWinStreak(0);
+                    localStorage.setItem('2048-win-streak', '0');
                 }
             }
             setIsMoving(false);
-        }, 150);
+        }, 100);
       }
     },
     [tiles, score, moves, isMoving, gameOver, won, addRandomTile, canMove, updateScore, highestTile, gamesWon, winStreak]
@@ -290,16 +306,24 @@ const Game2048Screen: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
   
-  const [touchStartPos, setTouchStartPos] = useState<{ x: number; y: number } | null>(null);
+  const touchStartPosRef = useRef<{ x: number; y: number } | null>(null);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (e.touches.length > 0) {
-      setTouchStartPos({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+      touchStartPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     }
-  };
+  }, []);
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!touchStartPos || e.changedTouches.length === 0) return;
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (touchStartPosRef.current) {
+      e.preventDefault();
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartPosRef.current || e.changedTouches.length === 0) return;
+
+    const touchStartPos = touchStartPosRef.current;
     const touchEndPos = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
     const dx = touchEndPos.x - touchStartPos.x;
     const dy = touchEndPos.y - touchStartPos.y;
@@ -317,13 +341,14 @@ const Game2048Screen: React.FC = () => {
         move(dy > 0 ? 'down' : 'up');
       }
     }
-    setTouchStartPos(null);
-  };
+    touchStartPosRef.current = null;
+  }, [move]);
 
   return (
     <div 
       className="flex flex-col items-center justify-start font-sans select-none w-full flex-grow"
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       style={{'--tile-gap': '0.5rem', touchAction: 'none'} as React.CSSProperties}
     >

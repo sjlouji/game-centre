@@ -20,11 +20,11 @@ const GAMES: Game[] = [
     description: 'Join the numbers to get the 2048 tile!',
     status: 'available',
     visual: (
-      <div className="grid grid-cols-2 gap-1.5 w-16 h-16">
-        <div className="bg-slate-700 rounded"></div>
-        <div className="bg-amber-400 rounded"></div>
-        <div className="bg-rose-400 rounded"></div>
-        <div className="bg-slate-400 rounded"></div>
+      <div className="grid grid-cols-2 gap-2 w-24 h-24">
+        <div className="bg-slate-700 rounded-md"></div>
+        <div className="bg-amber-400 rounded-md"></div>
+        <div className="bg-rose-400 rounded-md"></div>
+        <div className="bg-slate-400 rounded-md"></div>
       </div>
     ),
   },
