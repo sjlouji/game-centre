@@ -1,0 +1,5 @@
+{
+  "name": "React 2048 Game",
+  "description": "A fully functional 2048 game built with React, TypeScript, and Tailwind CSS. The game features a clean user interface, smooth tile animations, and classic 2048 gameplay mechanics.",
+  "requestFramePermissions": []
+}
