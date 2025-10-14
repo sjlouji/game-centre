@@ -289,7 +289,7 @@ const Game2048Screen: React.FC = () => {
 
   return (
     <div 
-      className="flex flex-col items-center justify-start font-sans select-none w-full"
+      className="flex flex-col items-center justify-start font-sans select-none w-full flex-grow"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       style={{'--tile-gap': '0.5rem', touchAction: 'none'} as React.CSSProperties}
