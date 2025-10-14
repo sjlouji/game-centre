@@ -40,12 +40,12 @@ const Header: React.FC<HeaderProps> = ({ score, highScore, moves }) => {
   }, [highScore]);
 
   return (
-    <header className="w-full flex justify-between items-center mb-4 max-w-sm sm:max-w-md">
-      <div className="flex flex-col">
+    <header className="w-full flex flex-col sm:flex-row justify-between sm:items-center text-center sm:text-left mb-4 max-w-sm sm:max-w-md">
+      <div className="flex flex-col mb-4 sm:mb-0">
         <h1 className="text-4xl sm:text-6xl font-bold text-neutral-50">2048</h1>
         <p className="text-neutral-400 mt-1">Join numbers, get to <strong>2048!</strong></p>
       </div>
-      <div className="flex gap-2">
+      <div className="flex justify-center gap-2">
         <StatBox label="Score" value={score} isAnimating={isAnimatingScore} />
         <StatBox label="Best" value={highScore} isAnimating={isAnimatingHighScore} />
         <StatBox label="Moves" value={moves} />

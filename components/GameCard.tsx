@@ -33,7 +33,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, description, visual, status,
         <p className="text-neutral-400 text-sm mb-4 h-10">{description}</p>
         <button
           disabled={!isAvailable}
-          className="w-full text-slate-900 font-bold py-3 px-8 rounded-md transition-transform hover:scale-105 disabled:transform-none bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-700 disabled:text-neutral-400 disabled:cursor-not-allowed"
+          className="w-full text-slate-900 font-bold py-3 px-8 rounded-md transition-transform hover:scale-105 active:scale-95 disabled:transform-none bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-700 disabled:text-neutral-400 disabled:cursor-not-allowed"
         >
           {isAvailable ? 'Play' : 'Coming Soon'}
         </button>

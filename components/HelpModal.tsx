@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface HelpModalProps {
@@ -16,13 +17,13 @@ const HelpModal: React.FC<HelpModalProps> = ({ onClose }) => {
       >
         <button 
             onClick={onClose}
-            className="absolute top-2 right-2 text-neutral-400 hover:text-neutral-50 transition-colors text-2xl"
+            className="absolute top-2 right-2 text-neutral-400 hover:text-neutral-50 transition-colors text-2xl active:scale-95"
             aria-label="Close help"
         >
             &times;
         </button>
-        <h2 className="text-3xl font-bold text-sky-400 mb-4">How to Play</h2>
-        <div className="space-y-4 text-neutral-400">
+        <h2 className="text-2xl sm:text-3xl font-bold text-sky-400 mb-3 sm:mb-4">How to Play</h2>
+        <div className="space-y-3 sm:space-y-4 text-neutral-400">
             <p>
                 The objective of the game is to combine numbered tiles to reach the <strong>2048 tile</strong>.
             </p>
@@ -40,7 +41,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ onClose }) => {
         <div className="text-center mt-6">
           <button
             onClick={onClose}
-            className="bg-sky-400 hover:bg-sky-300 text-slate-900 font-bold py-2 px-6 rounded-md transition-colors duration-200 text-lg"
+            className="bg-sky-400 hover:bg-sky-300 text-slate-900 font-bold py-2 px-6 rounded-md transition-all duration-200 text-lg active:scale-95"
           >
             Got It!
           </button>

@@ -10,29 +10,29 @@ interface GameControlsProps {
 
 const GameControls: React.FC<GameControlsProps> = ({ onNewGame, onUndo, canUndo, onHelp, onStats }) => {
   return (
-    <div className="w-full flex justify-center items-center gap-2 sm:gap-4 mt-4 sm:mt-8 max-w-sm sm:max-w-md">
+    <div className="w-full grid grid-cols-2 sm:flex sm:justify-center items-center gap-2 sm:gap-4 mt-4 sm:mt-8 max-w-sm sm:max-w-md">
       <button
         onClick={onStats}
-        className="border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-colors duration-200"
+        className="border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 active:scale-95"
       >
         Stats
       </button>
       <button
         onClick={onHelp}
-        className="border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-colors duration-200"
+        className="border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 active:scale-95"
       >
         Help
       </button>
       <button
         onClick={onUndo}
         disabled={!canUndo}
-        className="border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-colors duration-200 disabled:bg-slate-800 disabled:text-neutral-500 disabled:cursor-not-allowed"
+        className="border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 disabled:bg-slate-800 disabled:text-neutral-500 disabled:cursor-not-allowed active:scale-95"
       >
         Undo
       </button>
       <button
         onClick={onNewGame}
-        className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-2 px-4 rounded-md text-sm transition-colors duration-200"
+        className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 active:scale-95"
       >
         New Game
       </button>

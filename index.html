@@ -11,6 +11,8 @@
         min-height: 100vh;
         background-color: #020617; /* Background: Slate 950 */
         background-image: radial-gradient(ellipse at top, #1e293b 0%, #020617 100%);
+        background-size: 150% 150%;
+        animation: background-pan 30s ease-in-out infinite;
       }
       .tile-container {
         --tile-gap: 0.5rem;
@@ -37,6 +39,12 @@
           -webkit-text-fill-color: transparent;
           background-clip: text;
           text-fill-color: transparent;
+      }
+
+      @keyframes background-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
 
       @keyframes spawn {

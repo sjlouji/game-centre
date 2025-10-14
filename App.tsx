@@ -34,11 +34,15 @@ const GAMES: Game[] = [
     description: 'Swing through levels with your grappling hook!',
     status: 'coming-soon',
     visual: (
-       <div className="w-16 h-16 flex items-center justify-center">
-         <div className="w-4 h-4 rounded-full bg-slate-400 -mr-2"></div>
-         <div className="w-1 h-8 bg-slate-400 transform -rotate-45"></div>
-         <div className="w-4 h-4 rounded-full bg-slate-400 -ml-2"></div>
-       </div>
+       <div className="w-16 h-16 relative">
+        {/* Rope */}
+        <div className="absolute top-[-0.5rem] left-[3.2rem] w-12 h-0.5 bg-slate-600 transform -rotate-45 origin-top-left"></div>
+        {/* Stickman */}
+        <div className="absolute bottom-2 left-2 transform -rotate-45">
+          <div className="w-5 h-5 rounded-full bg-sky-400"></div> {/* Head */}
+          <div className="absolute top-4 left-2 w-0.5 h-6 bg-sky-400"></div> {/* Body */}
+        </div>
+      </div>
     ),
   },
     {
@@ -47,8 +51,11 @@ const GAMES: Game[] = [
     description: 'Navigate your ball through tricky obstacles.',
     status: 'coming-soon',
     visual: (
-      <div className="w-16 h-16 flex items-end justify-center">
-        <div className="w-8 h-8 rounded-full bg-rose-400"></div>
+      <div className="w-16 h-16 relative">
+        {/* Ball */}
+        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-9 h-9 rounded-full bg-rose-400"></div>
+        {/* Shadow */}
+        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-12 h-2 bg-slate-800 rounded-full opacity-75 blur-sm"></div>
       </div>
     ),
   },

@@ -23,7 +23,7 @@ const FeaturedGameCard: React.FC<FeaturedGameCardProps> = ({ game, onPlay }) => 
         <h3 className="text-sm font-bold text-sky-400 uppercase tracking-widest mb-1">Featured Game</h3>
         <h2 className="text-4xl sm:text-5xl font-bold text-neutral-50 mb-3">{game.title}</h2>
         <p className="text-neutral-400 text-base mb-8 h-12">{game.description}</p>
-        <button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-4 px-12 rounded-lg transition-transform hover:scale-105 shadow-lg hover:shadow-emerald-500/30">
+        <button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-4 px-12 rounded-lg transition-transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-emerald-500/30">
           Play Now
         </button>
     </div>
