@@ -1,11 +1,9 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import GameBoard from '../components/GameBoard';
 import Header from '../components/Header';
 import GameOverOverlay from '../components/GameOverOverlay';
 import WinOverlay from '../components/WinOverlay';
-import HelpModal from '../components/HelpModal';
-import StatsModal from '../components/StatsModal';
-import GameControls from '../components/GameControls';
 import { GRID_SIZE } from '../constants';
 import type { TileType } from '../types';
 
@@ -44,31 +42,11 @@ const Game2048Screen: React.FC = () => {
   const [winOverlayDismissed, setWinOverlayDismissed] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
   const [history, setHistory] = useState<GameState[]>([]);
-  const [showHelp, setShowHelp] = useState(false);
-  const [showStats, setShowStats] = useState(false);
-
-  // Stats & Achievements state
-  const [highestTile, setHighestTile] = useState(0);
-  const [gamesWon, setGamesWon] = useState(0);
-  const [winStreak, setWinStreak] = useState(0);
-  const [achievements, setAchievements] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    // Load stats from localStorage
+    // Load highscore from localStorage
     const savedHighScore = localStorage.getItem('2048-highscore');
     setHighScore(savedHighScore ? parseInt(savedHighScore, 10) : 0);
-
-    const savedHighestTile = localStorage.getItem('2048-highest-tile');
-    setHighestTile(savedHighestTile ? parseInt(savedHighestTile, 10) : 0);
-
-    const savedGamesWon = localStorage.getItem('2048-games-won');
-    setGamesWon(savedGamesWon ? parseInt(savedGamesWon, 10) : 0);
-
-    const savedWinStreak = localStorage.getItem('2048-win-streak');
-    setWinStreak(savedWinStreak ? parseInt(savedWinStreak, 10) : 0);
-
-    const savedAchievements = localStorage.getItem('2048-achievements');
-    setAchievements(savedAchievements ? new Set(JSON.parse(savedAchievements)) : new Set());
   }, []);
 
   const toGrid = (tileArray: TileType[]): (TileType | null)[][] => {
@@ -238,51 +216,23 @@ const Game2048Screen: React.FC = () => {
             const tilesWithNew = addRandomTile(tilesAfterMove);
             setTiles(tilesWithNew);
 
-            const maxTile = Math.max(0, ...tilesWithNew.map(t => t.value));
-            if (maxTile > highestTile) {
-              setHighestTile(maxTile);
-              localStorage.setItem('2048-highest-tile', maxTile.toString());
-            }
-
-            // Check for new achievements
-            const achievementTiers = [512, 1024, 2048, 4096, 8192];
-            const newAchievements = new Set(achievements);
-            achievementTiers.forEach(tier => {
-              if (maxTile >= tier) newAchievements.add(tier);
-            });
-            if (newAchievements.size > achievements.size) {
-              setAchievements(newAchievements);
-              localStorage.setItem('2048-achievements', JSON.stringify(Array.from(newAchievements)));
-            }
-
             const justWon = !won && tilesWithNew.some(tile => tile.value === 2048);
             if (justWon) {
               setWon(true);
               triggerHaptic([100, 30, 100, 30, 100]); // Win haptic
-              const newGamesWon = gamesWon + 1;
-              const newWinStreak = winStreak + 1;
-              setGamesWon(newGamesWon);
-              setWinStreak(newWinStreak);
-              localStorage.setItem('2048-games-won', newGamesWon.toString());
-              localStorage.setItem('2048-win-streak', newWinStreak.toString());
             }
 
             if (!canMove(tilesWithNew)) {
                 setGameOver(true);
-                if (justWon) {
-                    // User won on the last possible move. Win haptic is enough.
-                } else {
-                    // User lost.
+                if (!justWon) {
                     triggerHaptic(200); // Game over haptic
-                    setWinStreak(0);
-                    localStorage.setItem('2048-win-streak', '0');
                 }
             }
             setIsMoving(false);
         }, 100);
       }
     },
-    [tiles, score, moves, isMoving, gameOver, won, addRandomTile, canMove, updateScore, highestTile, gamesWon, winStreak, achievements]
+    [tiles, score, moves, isMoving, gameOver, won, addRandomTile, canMove, updateScore]
   );
   
   const handleUndo = useCallback(() => {
@@ -372,7 +322,9 @@ const Game2048Screen: React.FC = () => {
       <Header
         score={score}
         highScore={highScore}
-        moves={moves}
+        onNewGame={startNewGame}
+        onUndo={handleUndo}
+        canUndo={history.length > 0 && !isMoving}
       />
       <div className="relative">
         <GameBoard tiles={tiles} />
@@ -383,24 +335,7 @@ const Game2048Screen: React.FC = () => {
             onNewGame={startNewGame}
           />
         )}
-        {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
-        {showStats && (
-          <StatsModal 
-            highestTile={highestTile}
-            gamesWon={gamesWon}
-            winStreak={winStreak}
-            achievements={achievements}
-            onClose={() => setShowStats(false)} 
-          />
-        )}
       </div>
-      <GameControls
-        onNewGame={startNewGame}
-        onUndo={handleUndo}
-        canUndo={history.length > 0 && !isMoving}
-        onHelp={() => setShowHelp(true)}
-        onStats={() => setShowStats(true)}
-      />
     </div>
   );
 };
