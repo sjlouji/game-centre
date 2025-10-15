@@ -6,7 +6,7 @@
     <title>Game Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <!-- 
       Using the Tailwind CSS CDN via a script tag. 
       This is the simplest way to use Tailwind's utility classes without a build step.
@@ -14,6 +14,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
+        font-family: 'Inter', sans-serif;
         overscroll-behavior-y: contain;
         min-height: 100vh;
         background-color: #020617; /* Background: Slate 950 */
@@ -47,6 +48,10 @@
           background-clip: text;
           text-fill-color: transparent;
       }
+      
+      .font-heading {
+          font-family: 'Exo 2', sans-serif;
+      }
 
       @keyframes background-pan {
         0% { background-position: 0% 50%; }
@@ -79,9 +84,10 @@
       .animate-undo { animation: undo-flash 0.4s ease-in-out; }
       
       @keyframes fadeIn {
-        from { opacity: 0; } to { opacity: 1; }
+        from { opacity: 0; transform: translateY(10px); } 
+        to { opacity: 1; transform: translateY(0); }
       }
-      .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+      .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
       
       @keyframes fadeOut {
         from { opacity: 1; } to { opacity: 0; }
@@ -111,7 +117,7 @@
 }
 </script>
 </head>
-  <body class="text-neutral-50 overflow-hidden">
+  <body class="text-neutral-50">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

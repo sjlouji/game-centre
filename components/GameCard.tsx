@@ -14,7 +14,7 @@ const GameCard = React.forwardRef<HTMLDivElement, GameCardProps>(({ title, descr
     <div
       ref={ref}
       className={`game-card group relative bg-slate-900 rounded-lg overflow-hidden border border-slate-700 shadow-lg h-full flex flex-col ${
-        isAvailable ? 'cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1' : 'cursor-default'
+        isAvailable ? 'cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20 hover:-translate-y-2 hover:border-cyan-500/50' : 'cursor-default'
       } ${status === 'coming-soon' ? 'game-card-coming-soon' : ''}`}
     >
       {status === 'coming-soon' && (

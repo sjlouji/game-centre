@@ -31,7 +31,7 @@ export const GAMES: Game[] = [
     id: 'dino',
     title: 'Pixel Dino Run',
     description: 'Jump over obstacles and run as far as you can!',
-    status: 'available',
+    status: 'coming-soon',
     visual: React.createElement(
       'div',
       { className: 'w-24 h-16 relative' },

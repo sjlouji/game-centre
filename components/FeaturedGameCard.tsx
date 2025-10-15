@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Game } from '../lib/games';
 
@@ -7,15 +6,15 @@ interface FeaturedGameCardProps {
 }
 
 const FeaturedGameCard: React.FC<FeaturedGameCardProps> = ({ game }) => {
-  const className = "featured-card group relative w-full max-w-5xl bg-slate-900 rounded-xl flex flex-col sm:flex-row items-center overflow-hidden cursor-pointer shadow-lg transition-all duration-300 hover:shadow-cyan-500/20 border border-slate-700";
+  const className = "featured-card group relative w-full max-w-5xl bg-slate-900 rounded-xl flex flex-col sm:flex-row items-center overflow-hidden cursor-pointer shadow-lg transition-all duration-300 hover:shadow-cyan-500/40 hover:scale-[1.02] hover:border-sky-500/50 border border-slate-700";
 
   return (
     <div className={className}>
         {/* Background Gradient Decoration */}
-        <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky-500 via-slate-900 to-slate-900"></div>
+        <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-300 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky-500 via-slate-900 to-slate-900"></div>
         
         <div className="w-full sm:w-2/5 h-56 sm:h-auto sm:self-stretch flex items-center justify-center p-4 relative">
-            <div className="z-10 transform transition-transform duration-500 ease-out group-hover:scale-110">
+            <div className="z-10 transform transition-transform duration-500 ease-out group-hover:scale-110 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]">
                 {game.visual}
             </div>
         </div>
