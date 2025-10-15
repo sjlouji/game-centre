@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef } from 'react';
 
 interface HeaderProps {
@@ -43,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ score, highScore, onNewGame, onUndo, ca
   }, [highScore]);
 
   return (
-    <header className="w-full flex flex-col sm:flex-row justify-between sm:items-center text-center sm:text-left mb-4 max-w-sm sm:max-w-md">
+    <header className="w-full flex flex-col sm:flex-row justify-between sm:items-center text-center sm:text-left mb-4">
       <div className="flex flex-col mb-4 sm:mb-0">
         <h1 className="text-4xl sm:text-6xl font-bold text-neutral-50">2048</h1>
         <p className="text-neutral-400 mt-1">Join numbers, get to <strong>2048!</strong></p>

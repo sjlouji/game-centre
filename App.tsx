@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import GameCenter from './screens/GameCenter';
 import Game2048Screen from './screens/Game2048Screen';
+import DinoGameScreen from './screens/DinoGameScreen';
 import AppHeader from './components/AppHeader';
 
-export type GameId = '2048' | 'stickman' | 'bouncing-ball';
+export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball';
 
 export interface Game {
   id: GameId;
@@ -25,6 +26,31 @@ const GAMES: Game[] = [
         <div className="bg-amber-400 rounded-md"></div>
         <div className="bg-rose-400 rounded-md"></div>
         <div className="bg-slate-400 rounded-md"></div>
+      </div>
+    ),
+  },
+  {
+    id: 'dino',
+    title: 'Pixel Dino Run',
+    description: 'Jump over obstacles and run as far as you can!',
+    status: 'available',
+    visual: (
+       <div className="w-24 h-16 relative">
+        {/* Ground */}
+        <div className="absolute bottom-2 left-0 w-full h-px bg-slate-400">
+            <div className="absolute top-0 left-[10%] w-1 h-0.5 bg-slate-400"></div>
+            <div className="absolute top-0 left-[40%] w-2 h-0.5 bg-slate-400"></div>
+            <div className="absolute top-0 left-[75%] w-1 h-0.5 bg-slate-400"></div>
+        </div>
+        {/* Dino */}
+        <div className="absolute bottom-[0.6rem] left-2 w-5 h-6 bg-sky-400 rounded-t-sm">
+            {/* Eye */}
+            <div className="absolute top-1 right-1 w-1 h-1 bg-slate-900 rounded-full"></div>
+        </div>
+        {/* Cactus */}
+        <div className="absolute bottom-[0.6rem] right-4 w-2 h-4 bg-emerald-400">
+            <div className="absolute top-0 -left-1 w-4 h-1 bg-emerald-400"></div>
+        </div>
       </div>
     ),
   },
@@ -81,6 +107,8 @@ const App: React.FC = () => {
     switch (activeGame) {
       case '2048':
         return <Game2048Screen />;
+      case 'dino':
+        return <DinoGameScreen />;
       default:
         return <GameCenter games={GAMES} onSelectGame={(gameId) => handleNavigation(gameId)} />;
     }

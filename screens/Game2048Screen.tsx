@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import GameBoard from '../components/GameBoard';
 import Header from '../components/Header';
@@ -319,22 +320,24 @@ const Game2048Screen: React.FC = () => {
       style={{'--tile-gap': '0.5rem', touchAction: 'none'} as React.CSSProperties}
     >
       <style>{`:root { @media (min-width: 640px) { --tile-gap: 1rem; } }`}</style>
-      <Header
-        score={score}
-        highScore={highScore}
-        onNewGame={startNewGame}
-        onUndo={handleUndo}
-        canUndo={history.length > 0 && !isMoving}
-      />
-      <div className="relative">
-        <GameBoard tiles={tiles} />
-        {gameOver && <GameOverOverlay score={score} onRestart={startNewGame} />}
-        {won && !gameOver && !winOverlayDismissed && (
-          <WinOverlay 
-            onContinue={() => setWinOverlayDismissed(true)}
-            onNewGame={startNewGame}
-          />
-        )}
+      <div className="w-[18.5rem] sm:w-[29rem]">
+        <Header
+          score={score}
+          highScore={highScore}
+          onNewGame={startNewGame}
+          onUndo={handleUndo}
+          canUndo={history.length > 0 && !isMoving}
+        />
+        <div className="relative">
+          <GameBoard tiles={tiles} />
+          {gameOver && <GameOverOverlay score={score} onRestart={startNewGame} />}
+          {won && !gameOver && !winOverlayDismissed && (
+            <WinOverlay 
+              onContinue={() => setWinOverlayDismissed(true)}
+              onNewGame={startNewGame}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
