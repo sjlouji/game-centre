@@ -15,7 +15,7 @@ const App: React.FC = () => {
     setTimeout(() => {
       setActiveGame(target);
       setIsTransitioning(false);
-    }, 300); // Corresponds to the fade-out animation duration
+    }, 300);
   };
 
   const renderActiveScreen = () => {
