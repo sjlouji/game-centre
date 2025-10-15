@@ -5,18 +5,17 @@ interface GameCardProps {
   description: string;
   visual: React.ReactNode;
   status: 'available' | 'coming-soon';
-  onPlay: () => void;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ title, description, visual, status, onPlay }) => {
+const GameCard = React.forwardRef<HTMLDivElement, GameCardProps>(({ title, description, visual, status }, ref) => {
   const isAvailable = status === 'available';
 
   return (
     <div
-      className={`game-card group relative bg-slate-900 rounded-lg overflow-hidden border border-slate-700 shadow-lg ${
+      ref={ref}
+      className={`game-card group relative bg-slate-900 rounded-lg overflow-hidden border border-slate-700 shadow-lg h-full flex flex-col ${
         isAvailable ? 'cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1' : 'cursor-default'
       } ${status === 'coming-soon' ? 'game-card-coming-soon' : ''}`}
-      onClick={isAvailable ? onPlay : undefined}
     >
       {status === 'coming-soon' && (
         <div className="absolute top-2 right-2 bg-amber-400 text-slate-900 text-xs font-bold px-2 py-1 rounded-full z-10">
@@ -28,18 +27,22 @@ const GameCard: React.FC<GameCardProps> = ({ title, description, visual, status,
             {visual}
         </div>
       </div>
-      <div className="p-4 text-left">
+      <div className="p-4 text-left flex flex-col flex-grow">
         <h2 className="text-2xl font-bold text-sky-400 mb-2">{title}</h2>
         <p className="text-neutral-400 text-sm mb-4 h-10">{description}</p>
+        <div className="flex-grow"></div>
         <button
           disabled={!isAvailable}
-          className="w-full text-slate-900 font-bold py-3 px-8 rounded-md transition-transform hover:scale-105 active:scale-95 disabled:transform-none bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-700 disabled:text-neutral-400 disabled:cursor-not-allowed"
+          tabIndex={-1} // The link handles focus
+          className="w-full mt-auto text-slate-900 font-bold py-3 px-8 rounded-md transition-transform group-hover:scale-105 active:scale-95 disabled:transform-none bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-700 disabled:text-neutral-400 disabled:cursor-not-allowed"
         >
           {isAvailable ? 'Play' : 'Coming Soon'}
         </button>
       </div>
     </div>
   );
-};
+});
+
+GameCard.displayName = 'GameCard';
 
 export default GameCard;

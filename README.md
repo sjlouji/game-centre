@@ -1,13 +1,14 @@
-# React Game Center
+# Next.js Game Center
 
-A sleek, responsive, and modern game hub built from the ground up with React, TypeScript, and Tailwind CSS. This project showcases a polished user interface and a fully-functional 2048 game, all wrapped in a scalable "Game Center" architecture designed for easy expansion.
+A sleek, responsive, and modern game hub built from the ground up with Next.js, React, TypeScript, and Tailwind CSS. This project showcases a polished user interface and a fully-functional 2048 game, all wrapped in a scalable "Game Center" architecture designed for easy expansion.
 
 ---
 
 ## Features
 
 ### Game Center Hub
-- **Dynamic & Animated UI**: A visually appealing interface with a subtle animated gradient background and smooth screen transitions.
+- **Dynamic & Animated UI**: A visually appealing interface with a subtle animated gradient background.
+- **File-Based Routing**: Clean, shareable URLs for each game (e.g., `/2048`).
 - **Featured Game Section**: Highlights a primary game for immediate engagement.
 - **Extensible Game Library**: A clean grid layout for adding and displaying multiple games.
 - **"Coming Soon" State**: Easily mark games that are in development to build anticipation.
@@ -34,60 +35,51 @@ A sleek, responsive, and modern game hub built from the ground up with React, Ty
 
 ## Tech Stack
 
+- **Next.js**: A React framework for production-grade applications.
 - **React**: For building a component-based, declarative UI.
 - **TypeScript**: For robust, type-safe code that is easier to maintain and scale.
 - **Tailwind CSS**: For a utility-first CSS framework that enables rapid and consistent styling.
-- **HTML5 / CSS3**: Core web technologies, including modern features like CSS variables and keyframe animations.
-- **No Build Tools**: This project is configured to run directly in the browser using ES Modules and an `importmap`, making it simple to get started.
+- **PostCSS / Autoprefixer**: For processing and optimizing CSS for browser compatibility.
 
 ---
 
 ## Project Structure
 
-The codebase is organized into a clean and logical structure to promote modularity and ease of navigation.
-
 ```
 /
-├── components/         # Reusable React components (GameBoard, Tile, Modals, etc.)
+├── components/         # Reusable React components (Header, Modals, Game-specific UI)
+├── lib/                # Shared utilities, types, and constants
+├── pages/              # Application routes (index.tsx, 2048.tsx, etc.)
+│   ├── api/            # API routes
+│   ├── _app.tsx        # Main application wrapper
+│   └── _document.tsx   # Custom document structure
 ├── screens/            # Top-level screen components (GameCenter, Game2048Screen)
-├── types/              # TypeScript type definitions (TileType)
-├── constants.ts        # Shared constants (GRID_SIZE)
-├── App.tsx             # Main application component with routing logic
-├── index.html          # The entry point of the web application
-├── index.tsx           # The React bootstrap script
-└── metadata.json       # Application metadata
+├── styles/             # Global styles
+├── public/             # Static assets
+└── tailwind.config.js  # Tailwind CSS configuration
 ```
 
 ---
 
 ## Getting Started
 
-This project is set up to be run without any complex build steps or package installations.
-
 1.  **Clone the repository:**
     ```sh
     git clone <repository-url>
     ```
 
-2.  **Navigate to the project directory:**
+2.  **Install dependencies:**
     ```sh
-    cd <project-directory>
+    npm install
     ```
 
-3.  **Run a local server:**
-    Since the project uses ES Modules, you need to serve the files from a local web server. A simple way to do this is with Python's built-in server or a tool like `live-server`.
-
-    **Using Python 3:**
+3.  **Run the development server:**
     ```sh
-    python -m http.server
+    npm run dev
     ```
-
-    **Using `live-server` for VS Code:**
-    - Install the "Live Server" extension in Visual Studio Code.
-    - Right-click on `index.html` in the file explorer and select "Open with Live Server".
 
 4.  **Open in your browser:**
-    Navigate to the local address provided by your server (e.g., `http://localhost:8000`).
+    Navigate to `http://localhost:3000`.
 
 ---
 
@@ -95,11 +87,11 @@ This project is set up to be run without any complex build steps or package inst
 
 The application is designed to be easily extensible. To add a new game:
 
-1.  **Create the Game Component**: Build your new game as a React component inside the `screens/` directory (e.g., `screens/NewGameScreen.tsx`).
+1.  **Create the Game Component**: Build your new game as a React component, for example in `screens/NewGameScreen.tsx`.
 
-2.  **Add Game Metadata**: In `App.tsx`, add a new game object to the `GAMES` array.
+2.  **Add Game Metadata**: In `lib/games.ts`, add a new game object to the `GAMES` array.
     ```typescript
-    const GAMES: Game[] = [
+    export const GAMES: Game[] = [
       // ... existing games
       {
         id: 'new-game', // A unique string ID
@@ -111,17 +103,14 @@ The application is designed to be easily extensible. To add a new game:
     ];
     ```
 
-3.  **Add the Route**: In `App.tsx`, add a `case` for your new game's ID in the `renderActiveScreen` function to render your component.
-    ```typescript
-    const renderActiveScreen = () => {
-      // ...
-      switch (activeGame) {
-        case '2048':
-          return <Game2048Screen />;
-        case 'new-game': // Add this case
-          return <NewGameScreen />;
-        default:
-          return <GameCenter ... />;
-      }
+3.  **Create the Game Page**: Create a new file in the `pages/` directory named after your game's ID (e.g., `pages/new-game.tsx`).
+    ```tsx
+    import NewGameScreen from '../screens/NewGameScreen';
+
+    const NewGamePage: React.FC = () => {
+      return <NewGameScreen />;
     };
+
+    export default NewGamePage;
     ```
+The game will now automatically appear in the Game Center and be accessible via its own URL.

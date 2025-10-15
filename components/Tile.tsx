@@ -1,5 +1,5 @@
 import React from 'react';
-import type { TileType } from '../types';
+import type { TileType } from '../lib/types';
 
 interface TileProps {
   tile: TileType;

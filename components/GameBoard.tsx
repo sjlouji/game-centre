@@ -1,7 +1,7 @@
 import React from 'react';
-import type { TileType } from '../types';
+import type { TileType } from '../lib/types';
 import Tile from './Tile';
-import { GRID_SIZE } from '../constants';
+import { GRID_SIZE } from '../lib/constants';
 
 interface GameBoardProps {
   tiles: TileType[];

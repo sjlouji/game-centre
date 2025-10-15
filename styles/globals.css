@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overscroll-behavior-y: contain;
+  min-height: 100vh;
+  background-color: #020617; /* Background: Slate 950 */
+  background-image: radial-gradient(ellipse at top, #1e293b 0%, #020617 100%);
+  background-size: 150% 150%;
+  animation: background-pan 30s ease-in-out infinite;
+}
+.tile-container {
+  --tile-gap: 0.5rem;
+}
+@media (min-width: 640px) { /* sm breakpoint */
+  .tile-container {
+    --tile-gap: 1rem;
+  }
+}
+
+.game-card-visual {
+  background: linear-gradient(to top right, #1e293b, #0f172a);
+}
+.game-card-coming-soon .game-card-visual {
+  filter: grayscale(80%);
+}
+ .game-card-coming-soon p, .game-card-coming-soon h2 {
+  opacity: 0.6;
+}
+
+.text-gradient {
+    background: linear-gradient(to right, #A5B4FC, #38BDF8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+@keyframes background-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spawn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.animate-spawn { animation: spawn 0.15s ease-out; }
+@keyframes merge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+.animate-merge { animation: merge 0.15s ease-in-out; }
+
+@keyframes score-update {
+  0%, 100% { transform: scale(1); text-shadow: none; }
+  50% { transform: scale(1.4); color: #38BDF8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.7); }
+}
+.animate-score-update { animation: score-update 0.4s cubic-bezier(0.1, 0.8, 0.9, 1.5); }
+
+@keyframes undo-flash {
+  0%, 100% { box-shadow: 0 0 0px 0px rgba(135, 206, 250, 0); }
+  50% { box-shadow: 0 0 8px 3px rgba(56, 189, 248, 0.6); }
+}
+.animate-undo { animation: undo-flash 0.4s ease-in-out; }
+
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+.animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-slide-up { animation: slideUp 0.4s ease-out 0.1s forwards; opacity: 0; }

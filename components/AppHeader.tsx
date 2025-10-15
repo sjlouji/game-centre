@@ -1,10 +1,6 @@
-import React from 'react';
-import type { GameId } from '../App';
 
-interface AppHeaderProps {
-  activeGame: GameId | 'menu';
-  onBack: () => void;
-}
+import React from 'react';
+import type { GameId } from '../lib/games';
 
 const Logo: React.FC = () => (
   <div className="flex items-center gap-3">
@@ -18,6 +14,11 @@ const Logo: React.FC = () => (
   </div>
 );
 
+interface AppHeaderProps {
+  activeGame: GameId | 'menu';
+  onBack: () => void;
+}
+
 const AppHeader: React.FC<AppHeaderProps> = ({ activeGame, onBack }) => {
   const isMenu = activeGame === 'menu';
 
@@ -25,9 +26,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({ activeGame, onBack }) => {
     <header className="w-full max-w-7xl mx-auto mb-4 sm:mb-8 flex justify-between items-center h-16">
       <div className="flex items-center">
         {isMenu ? (
-          <Logo />
+          <div>
+            <Logo />
+          </div>
         ) : (
-          <button onClick={onBack} className="text-xl text-neutral-400 hover:text-neutral-50 transition-all flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 active:scale-90">
+          <button onClick={onBack} className="text-xl text-neutral-400 hover:text-neutral-50 transition-all flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 active:scale-90" aria-label="Back to Game Center">
             <span>&larr;</span>
           </button>
         )}

@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect, useRef } from 'react';
 
 interface HeaderProps {
@@ -49,26 +48,22 @@ const Header: React.FC<HeaderProps> = ({ score, highScore, onNewGame, onUndo, ca
         <h1 className="text-4xl sm:text-6xl font-bold text-neutral-50">2048</h1>
         <p className="text-neutral-400 mt-1">Join numbers, get to <strong>2048!</strong></p>
       </div>
-      <div className="flex flex-col items-center gap-2">
-        <div className="flex justify-center gap-2">
-          <StatBox label="Score" value={score} isAnimating={isAnimatingScore} />
-          <StatBox label="Best" value={highScore} isAnimating={isAnimatingHighScore} />
-        </div>
-        <div className="flex justify-center gap-2 w-full">
-           <button
-            onClick={onUndo}
-            disabled={!canUndo}
-            className="flex-1 border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 disabled:bg-slate-800 disabled:text-neutral-500 disabled:cursor-not-allowed active:scale-95"
-          >
-            Undo
-          </button>
-          <button
-            onClick={onNewGame}
-            className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 active:scale-95"
-          >
-            New
-          </button>
-        </div>
+      <div className="w-full sm:w-auto grid grid-cols-2 gap-2">
+        <StatBox label="Score" value={score} isAnimating={isAnimatingScore} />
+        <StatBox label="Best" value={highScore} isAnimating={isAnimatingHighScore} />
+        <button
+          onClick={onUndo}
+          disabled={!canUndo}
+          className="border border-slate-700 bg-slate-900 hover:bg-slate-800 text-neutral-50 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 disabled:bg-slate-800 disabled:text-neutral-500 disabled:cursor-not-allowed active:scale-95"
+        >
+          Undo
+        </button>
+        <button
+          onClick={onNewGame}
+          className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-2 px-4 rounded-md text-sm transition-all duration-200 active:scale-95"
+        >
+          New
+        </button>
       </div>
     </header>
   );

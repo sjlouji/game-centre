@@ -1,12 +1,10 @@
-
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import GameBoard from '../components/GameBoard';
 import Header from '../components/Header';
 import GameOverOverlay from '../components/GameOverOverlay';
 import WinOverlay from '../components/WinOverlay';
-import { GRID_SIZE } from '../constants';
-import type { TileType } from '../types';
+import { GRID_SIZE } from '../lib/constants';
+import type { TileType } from '../lib/types';
 
 // Helper function for haptic feedback
 const triggerHaptic = (pattern: number | number[]) => {
@@ -43,12 +41,67 @@ const Game2048Screen: React.FC = () => {
   const [winOverlayDismissed, setWinOverlayDismissed] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
   const [history, setHistory] = useState<GameState[]>([]);
+  
+  // State for stats
+  const [highestTile, setHighestTile] = useState(0);
+  const [gamesWon, setGamesWon] = useState(0);
+  const [winStreak, setWinStreak] = useState(0);
+  const [achievements, setAchievements] = useState<Set<number>>(new Set());
 
+  // Load stats from localStorage
   useEffect(() => {
-    // Load highscore from localStorage
     const savedHighScore = localStorage.getItem('2048-highscore');
     setHighScore(savedHighScore ? parseInt(savedHighScore, 10) : 0);
+    const savedHighestTile = localStorage.getItem('2048-highestTile');
+    setHighestTile(savedHighestTile ? parseInt(savedHighestTile, 10) : 0);
+    const savedGamesWon = localStorage.getItem('2048-gamesWon');
+    setGamesWon(savedGamesWon ? parseInt(savedGamesWon, 10) : 0);
+    const savedWinStreak = localStorage.getItem('2048-winStreak');
+    setWinStreak(savedWinStreak ? parseInt(savedWinStreak, 10) : 0);
+    const savedAchievements = localStorage.getItem('2048-achievements');
+    setAchievements(savedAchievements ? new Set(JSON.parse(savedAchievements)) : new Set());
   }, []);
+  
+  const updateStats = useCallback((updatedTiles: TileType[], newScore: number, gameWon: boolean, gameLost: boolean) => {
+    const maxTile = Math.max(0, ...updatedTiles.map(t => t.value));
+    if (maxTile > highestTile) {
+      setHighestTile(maxTile);
+      localStorage.setItem('2048-highestTile', maxTile.toString());
+    }
+
+    if (newScore > highScore) {
+      setHighScore(newScore);
+      localStorage.setItem('2048-highscore', newScore.toString());
+    }
+
+    if (gameWon) {
+      const newGamesWon = gamesWon + 1;
+      const newWinStreak = winStreak + 1;
+      setGamesWon(newGamesWon);
+      setWinStreak(newWinStreak);
+      localStorage.setItem('2048-gamesWon', newGamesWon.toString());
+      localStorage.setItem('2048-winStreak', newWinStreak.toString());
+    } else if (gameLost) {
+      setWinStreak(0);
+      localStorage.setItem('2048-winStreak', '0');
+    }
+    
+    // Update achievements
+    const achievementTiers = [512, 1024, 2048, 4096, 8192];
+    const newAchievements = new Set(achievements);
+    let updated = false;
+    achievementTiers.forEach(tier => {
+      if (maxTile >= tier && !newAchievements.has(tier)) {
+        newAchievements.add(tier);
+        updated = true;
+      }
+    });
+    if (updated) {
+      setAchievements(newAchievements);
+      localStorage.setItem('2048-achievements', JSON.stringify(Array.from(newAchievements)));
+    }
+
+  }, [highestTile, highScore, gamesWon, winStreak, achievements]);
 
   const toGrid = (tileArray: TileType[]): (TileType | null)[][] => {
     const grid: (TileType | null)[][] = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
@@ -106,19 +159,12 @@ const Game2048Screen: React.FC = () => {
     let newTiles = addRandomTile([]);
     newTiles = addRandomTile(newTiles);
     setTiles(newTiles);
-  }, [addRandomTile]);
+    updateStats(newTiles, 0, false, false);
+  }, [addRandomTile, updateStats]);
 
   useEffect(() => {
     startNewGame();
-  }, [startNewGame]);
-
-  const updateScore = useCallback((newScore: number) => {
-    setScore(newScore);
-    if (newScore > highScore) {
-      setHighScore(newScore);
-      localStorage.setItem('2048-highscore', newScore.toString());
-    }
-  }, [highScore]);
+  }, []);
 
   const move = useCallback(
     (direction: 'up' | 'down' | 'left' | 'right') => {
@@ -190,9 +236,9 @@ const Game2048Screen: React.FC = () => {
 
       if (hasMoved) {
         if (totalScoreGained > 0) {
-          triggerHaptic([40, 20, 40]); // Merge feedback
+          triggerHaptic([40, 20, 40]);
         } else {
-          triggerHaptic(20); // Move feedback
+          triggerHaptic(20);
         }
 
         const prevState = { tiles, score, moves };
@@ -209,7 +255,8 @@ const Game2048Screen: React.FC = () => {
           });
         });
         
-        updateScore(score + totalScoreGained);
+        const newScore = score + totalScoreGained;
+        setScore(newScore);
         setTiles(finalTiles);
         
         setTimeout(() => {
@@ -220,20 +267,22 @@ const Game2048Screen: React.FC = () => {
             const justWon = !won && tilesWithNew.some(tile => tile.value === 2048);
             if (justWon) {
               setWon(true);
-              triggerHaptic([100, 30, 100, 30, 100]); // Win haptic
+              triggerHaptic([100, 30, 100, 30, 100]);
             }
 
-            if (!canMove(tilesWithNew)) {
+            const gameIsOver = !canMove(tilesWithNew);
+            if (gameIsOver) {
                 setGameOver(true);
                 if (!justWon) {
-                    triggerHaptic(200); // Game over haptic
+                    triggerHaptic(200);
                 }
             }
+            updateStats(tilesWithNew, newScore, justWon, gameIsOver);
             setIsMoving(false);
         }, 100);
       }
     },
-    [tiles, score, moves, isMoving, gameOver, won, addRandomTile, canMove, updateScore]
+    [tiles, score, moves, isMoving, gameOver, won, addRandomTile, canMove, updateStats]
   );
   
   const handleUndo = useCallback(() => {
@@ -320,13 +369,13 @@ const Game2048Screen: React.FC = () => {
       style={{'--tile-gap': '0.5rem', touchAction: 'none'} as React.CSSProperties}
     >
       <style>{`:root { @media (min-width: 640px) { --tile-gap: 1rem; } }`}</style>
-      <div className="w-[18.5rem] sm:w-[29rem]">
-        <Header
-          score={score}
-          highScore={highScore}
-          onNewGame={startNewGame}
-          onUndo={handleUndo}
-          canUndo={history.length > 0 && !isMoving}
+      <div className="w-full max-w-[18.5rem] sm:max-w-[29rem]">
+        <Header 
+            score={score} 
+            highScore={highScore}
+            onNewGame={startNewGame}
+            onUndo={handleUndo}
+            canUndo={history.length > 0 && !isMoving}
         />
         <div className="relative">
           <GameBoard tiles={tiles} />
