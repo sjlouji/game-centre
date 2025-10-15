@@ -1,6 +1,5 @@
 import React from 'react';
 
-// FIX: The 'Theme' type is not exported from '../App'. Defining it locally to resolve the error.
 type Theme = 'light' | 'dark';
 
 interface ThemeToggleProps {
