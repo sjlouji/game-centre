@@ -40,7 +40,7 @@ const GameCenter: React.FC<GameCenterProps> = ({ games, onSelectGame }) => {
         A collection of fun, addictive web games - simple to play, impossible to put down, and always evolving with new challenges!
       </p>
 
-      <div className="w-full max-w-5xl text-center">
+      <div className="w-full max-w-4xl text-center">
           <div className="mb-8 flex justify-center items-center">
               <div className="flex items-center gap-2">
                   <FilterButton filter="all" label="All" />
