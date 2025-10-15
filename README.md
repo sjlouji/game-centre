@@ -2,9 +2,6 @@
 
 A sleek, responsive, and modern game hub built from the ground up with React, TypeScript, and Tailwind CSS. This project showcases a polished user interface and a fully-functional 2048 game, all wrapped in a scalable "Game Center" architecture designed for easy expansion.
 
-![React 2048 Game Center](https://i.imgur.com/example.png)  
-*(Note: Replace with an actual screenshot of the application)*
-
 ---
 
 ## Features
