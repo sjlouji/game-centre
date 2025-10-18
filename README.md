@@ -86,8 +86,6 @@ GCADE is a polished, modern hub for classic web games, rebuilt from the ground u
 
 We welcome contributions to make GCADE even better! Please read our [**contributing guidelines**](CONTRIBUTING.md) to get started.
 
-<hr />
-
 <h2>🤝 Contributors</h2>
 
 <a href="https://github.com/reflex-dev/reflex/graphs/contributors">
