@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import GameCenter from './screens/GameCenter';
 import Game2048Screen from './screens/Game2048Screen';
 import DinoGameScreen from './screens/DinoGameScreen';
+import PaperTossScreen from './screens/PaperTossScreen';
 import AppHeader from './components/AppHeader';
 import { Game, GameId, GAMES } from './lib/games';
 
@@ -20,7 +21,6 @@ const App: React.FC = () => {
 
   const renderActiveScreen = () => {
     if (activeGame === 'menu') {
-      // FIX: Added onSelectGame prop to GameCenter
       return <GameCenter games={GAMES} onSelectGame={(gameId) => handleNavigation(gameId)} />;
     }
     
@@ -29,8 +29,9 @@ const App: React.FC = () => {
         return <Game2048Screen />;
       case 'dino':
         return <DinoGameScreen />;
+      case 'paper-toss':
+        return <PaperTossScreen />;
       default:
-        // FIX: Added onSelectGame prop to GameCenter
         return <GameCenter games={GAMES} onSelectGame={(gameId) => handleNavigation(gameId)} />;
     }
   };

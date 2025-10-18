@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball';
+export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'paper-toss';
 export type GameCategory = 'Puzzle' | 'Strategy' | 'Classic' | 'Arcade' | 'Endless Runner' | 'Skill';
 
 export interface Game {
@@ -54,6 +54,30 @@ export const GAMES: Game[] = [
         'div',
         { className: 'absolute bottom-[0.6rem] right-4 w-4 h-5 bg-emerald-400 rounded-md' }
       )
+    ),
+  },
+  {
+    id: 'paper-toss',
+    title: 'Paper Toss',
+    description: 'Flick the paper into the bin, but watch out for the fan!',
+    status: 'available',
+    categories: ['Arcade', 'Skill', 'Classic'],
+    visual: React.createElement(
+      'div',
+      { className: 'w-24 h-24 flex flex-col items-center justify-center' },
+      React.createElement(
+        'div',
+        { className: 'w-8 h-8 rounded-full bg-slate-300' },
+        React.createElement('div', {className: 'w-3 h-3 rounded-full bg-slate-400/50 relative top-2 left-2'})
+      ),
+      React.createElement(
+        'div',
+        { className: 'w-16 h-1 bg-slate-600 my-2' }
+      ),
+       React.createElement(
+        'div',
+        { className: 'w-10 h-12 border-2 border-slate-500 rounded-t-md border-b-0' }
+      ),
     ),
   },
   {

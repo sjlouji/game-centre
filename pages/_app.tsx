@@ -5,6 +5,7 @@ import AppHeader from '../components/AppHeader';
 import type { GameId } from '../lib/games';
 import '../styles/globals.css';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -30,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </main>
       </div>
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }
