@@ -17,7 +17,7 @@ const triggerHaptic = (pattern: number | number[]) => {
 const Game2048Screen: React.FC = () => {
   const tileIdCounter = useRef(1);
 
-  const createTile = (row: number, col: number, value: number, isNew: boolean = false): TileType => ({
+  const createTile = useCallback((row: number, col: number, value: number, isNew: boolean = false): TileType => ({
     id: tileIdCounter.current++,
     value,
     row,
@@ -25,7 +25,7 @@ const Game2048Screen: React.FC = () => {
     isNew,
     isMerged: false,
     isReverted: false,
-  });
+  }), []);
 
   type GameState = {
     tiles: TileType[];
@@ -67,44 +67,56 @@ const Game2048Screen: React.FC = () => {
   
   const updateStats = useCallback((updatedTiles: TileType[], newScore: number, gameWon: boolean, gameLost: boolean) => {
     const maxTile = Math.max(0, ...updatedTiles.map(t => t.value));
-    if (maxTile > highestTile) {
-      setHighestTile(maxTile);
-      localStorage.setItem('2048-highestTile', maxTile.toString());
-    }
 
-    if (newScore > highScore) {
-      setHighScore(newScore);
-      localStorage.setItem('2048-highscore', newScore.toString());
-    }
+    setHighestTile(currentHighest => {
+      if (maxTile > currentHighest) {
+        localStorage.setItem('2048-highestTile', maxTile.toString());
+        return maxTile;
+      }
+      return currentHighest;
+    });
+
+    setHighScore(currentHighScore => {
+      if (newScore > currentHighScore) {
+        localStorage.setItem('2048-highscore', newScore.toString());
+        return newScore;
+      }
+      return currentHighScore;
+    });
 
     if (gameWon) {
-      const newGamesWon = gamesWon + 1;
-      const newWinStreak = winStreak + 1;
-      setGamesWon(newGamesWon);
-      setWinStreak(newWinStreak);
-      localStorage.setItem('2048-gamesWon', newGamesWon.toString());
-      localStorage.setItem('2048-winStreak', newWinStreak.toString());
+      setGamesWon(current => {
+        const newGamesWon = current + 1;
+        localStorage.setItem('2048-gamesWon', newGamesWon.toString());
+        return newGamesWon;
+      });
+      setWinStreak(current => {
+        const newWinStreak = current + 1;
+        localStorage.setItem('2048-winStreak', newWinStreak.toString());
+        return newWinStreak;
+      });
     } else if (gameLost) {
       setWinStreak(0);
       localStorage.setItem('2048-winStreak', '0');
     }
-    
-    // Update achievements
-    const achievementTiers = [512, 1024, 2048, 4096, 8192];
-    const newAchievements = new Set(achievements);
-    let updated = false;
-    achievementTiers.forEach(tier => {
-      if (maxTile >= tier && !newAchievements.has(tier)) {
-        newAchievements.add(tier);
-        updated = true;
-      }
-    });
-    if (updated) {
-      setAchievements(newAchievements);
-      localStorage.setItem('2048-achievements', JSON.stringify(Array.from(newAchievements)));
-    }
 
-  }, [highestTile, highScore, gamesWon, winStreak, achievements]);
+    setAchievements(currentAchievements => {
+      const achievementTiers = [512, 1024, 2048, 4096, 8192];
+      const newAchievements = new Set(currentAchievements);
+      let updated = false;
+      achievementTiers.forEach(tier => {
+        if (maxTile >= tier && !newAchievements.has(tier)) {
+          newAchievements.add(tier);
+          updated = true;
+        }
+      });
+      if (updated) {
+        localStorage.setItem('2048-achievements', JSON.stringify(Array.from(newAchievements)));
+        return newAchievements;
+      }
+      return currentAchievements;
+    });
+  }, []);
 
   const toGrid = (tileArray: TileType[]): (TileType | null)[][] => {
     const grid: (TileType | null)[][] = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
