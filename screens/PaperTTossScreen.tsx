@@ -11,7 +11,7 @@ const VANISHING_POINT_Y = SCENE_HEIGHT / 2 - 150;
 const FLOOR_Y = SCENE_HEIGHT - 100;
 
 // --- Physics Constants ---
-const GRAVITY = 0.2;
+const GRAVITY = 0.25;
 const MAX_WIND_SPEED = 2.0;
 const BOUNCE_FACTOR = -0.5;
 const FRICTION = 0.85;
@@ -117,7 +117,7 @@ function drawBinFrontRim(ctx: CanvasRenderingContext2D) {
 }
 
 
-const PaperTossScreen: React.FC = () => {
+const PaperTTossScreen: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const paperState = useRef({ ...initialPaperState });
     const flickStartPos = useRef<{ x: number; y: number } | null>(null);
@@ -394,9 +394,9 @@ const PaperTossScreen: React.FC = () => {
         if (dy < -15) { // Needs a clear upward flick
             const { current: paper } = paperState;
             paper.inFlight = true;
-            paper.vx = dx * 0.09;
-            paper.vy = -dy * 0.14;
-            paper.vz = -dy * 0.17;
+            paper.vx = dx * 0.12;
+            paper.vy = -dy * 0.18;
+            paper.vz = -dy * 0.22;
             paper.rotationSpeedZ = paper.vx * 0.5;
         }
         flickStartPos.current = null;
@@ -447,4 +447,4 @@ const PaperTossScreen: React.FC = () => {
     );
 };
 
-export default PaperTossScreen;
+export default PaperTTossScreen;
