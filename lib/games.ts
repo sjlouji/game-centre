@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball';
@@ -31,7 +30,7 @@ export const GAMES: Game[] = [
     id: 'dino',
     title: 'Pixel Dino Run',
     description: 'Jump over obstacles and run as far as you can!',
-    status: 'coming-soon',
+    status: 'available',
     visual: React.createElement(
       'div',
       { className: 'w-24 h-16 relative' },
@@ -44,13 +43,12 @@ export const GAMES: Game[] = [
       ),
       React.createElement(
         'div',
-        { className: 'absolute bottom-[0.6rem] left-2 w-5 h-6 bg-sky-400 rounded-t-sm' },
-        React.createElement('div', { className: 'absolute top-1 right-1 w-1 h-1 bg-slate-900 rounded-full' })
+        { className: 'absolute bottom-[0.6rem] left-2 w-6 h-7 bg-sky-400 rounded-lg' },
+        React.createElement('div', { className: 'absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-slate-900 rounded-full' })
       ),
       React.createElement(
         'div',
-        { className: 'absolute bottom-[0.6rem] right-4 w-2 h-4 bg-emerald-400' },
-        React.createElement('div', { className: 'absolute top-0 -left-1 w-4 h-1 bg-emerald-400' })
+        { className: 'absolute bottom-[0.6rem] right-4 w-4 h-5 bg-emerald-400 rounded-md' }
       )
     ),
   },

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import GameBoard from '../components/GameBoard';
 import Header from '../components/Header';
 import GameOverOverlay from '../components/GameOverOverlay';
 import WinOverlay from '../components/WinOverlay';
 import { GRID_SIZE } from '../lib/constants';
 import type { TileType } from '../lib/types';
+import Swipeable from '../components/Swipeable';
 
 // Helper function for haptic feedback
 const triggerHaptic = (pattern: number | number[]) => {
@@ -321,52 +322,15 @@ const Game2048Screen: React.FC = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
-  
-  const touchStartPosRef = useRef<{ x: number; y: number } | null>(null);
-
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      touchStartPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }
-  }, []);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (touchStartPosRef.current) {
-      e.preventDefault();
-    }
-  }, []);
-
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touchStartPosRef.current || e.changedTouches.length === 0) return;
-
-    const touchStartPos = touchStartPosRef.current;
-    const touchEndPos = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-    const dx = touchEndPos.x - touchStartPos.x;
-    const dy = touchEndPos.y - touchStartPos.y;
-
-    const minSwipeDistance = 30;
-    const swipeDirectionThreshold = 1.5;
-
-    const absDx = Math.abs(dx);
-    const absDy = Math.abs(dy);
-
-    if (Math.max(absDx, absDy) > minSwipeDistance) {
-      if (absDx > absDy * swipeDirectionThreshold) {
-        move(dx > 0 ? 'right' : 'left');
-      } else if (absDy > absDx * swipeDirectionThreshold) {
-        move(dy > 0 ? 'down' : 'up');
-      }
-    }
-    touchStartPosRef.current = null;
-  }, [move]);
 
   return (
-    <div 
+    <Swipeable
+      onSwipeUp={() => move('up')}
+      onSwipeDown={() => move('down')}
+      onSwipeLeft={() => move('left')}
+      onSwipeRight={() => move('right')}
       className="flex flex-col items-center justify-start font-sans select-none w-full flex-grow"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      style={{'--tile-gap': '0.5rem', touchAction: 'none'} as React.CSSProperties}
+      style={{'--tile-gap': '0.5rem'} as React.CSSProperties}
     >
       <style>{`:root { @media (min-width: 640px) { --tile-gap: 1rem; } }`}</style>
       <div className="w-full max-w-[18.5rem] sm:max-w-[29rem]">
@@ -388,7 +352,7 @@ const Game2048Screen: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </Swipeable>
   );
 };
 
