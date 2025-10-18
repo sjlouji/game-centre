@@ -1,6 +1,7 @@
 import React from 'react';
 
 export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball';
+export type GameCategory = 'Puzzle' | 'Strategy' | 'Classic' | 'Arcade' | 'Endless Runner' | 'Skill';
 
 export interface Game {
   id: GameId;
@@ -8,6 +9,7 @@ export interface Game {
   description: string;
   status: 'available' | 'coming-soon';
   visual: React.ReactNode;
+  categories: GameCategory[];
 }
 
 // FIX: Replaced JSX with React.createElement to be valid in a .ts file
@@ -17,6 +19,7 @@ export const GAMES: Game[] = [
     title: '2048',
     description: 'Join the numbers to get the 2048 tile!',
     status: 'available',
+    categories: ['Puzzle', 'Strategy', 'Classic'],
     visual: React.createElement(
       'div',
       { className: 'grid grid-cols-2 gap-2 w-24 h-24' },
@@ -31,6 +34,7 @@ export const GAMES: Game[] = [
     title: 'Pixel Dino Run',
     description: 'Jump over obstacles and run as far as you can!',
     status: 'available',
+    categories: ['Arcade', 'Endless Runner'],
     visual: React.createElement(
       'div',
       { className: 'w-24 h-16 relative' },
@@ -57,6 +61,7 @@ export const GAMES: Game[] = [
     title: 'Stickman Hook',
     description: 'Swing through levels with your grappling hook!',
     status: 'coming-soon',
+    categories: ['Arcade', 'Skill'],
     visual: React.createElement(
       'div',
       { className: 'w-16 h-16 relative' },
@@ -74,6 +79,7 @@ export const GAMES: Game[] = [
     title: 'Bouncing Ball',
     description: 'Navigate your ball through tricky obstacles.',
     status: 'coming-soon',
+    categories: ['Arcade', 'Skill'],
     visual: React.createElement(
       'div',
       { className: 'w-16 h-16 relative' },

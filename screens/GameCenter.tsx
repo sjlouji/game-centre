@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Game, GameId } from '../lib/games';
+import type { Game, GameId, GameCategory } from '../lib/games';
 import GameCard from '../components/GameCard';
 
 interface GameCenterProps {
@@ -7,15 +7,19 @@ interface GameCenterProps {
   onSelectGame: (gameId: GameId) => void;
 }
 
-type FilterType = 'all' | 'available' | 'coming-soon';
+type FilterType = 'all' | 'available' | 'coming-soon' | GameCategory;
 
 const GameCenter: React.FC<GameCenterProps> = ({ games, onSelectGame }) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  
+  const allCategories = [...new Set(games.flatMap(game => game.categories))];
 
   const filteredGames = games.filter(game => {
     if (activeFilter === 'available') return game.status === 'available';
     if (activeFilter === 'coming-soon') return game.status === 'coming-soon';
-    return true;
+    if (activeFilter === 'all') return true;
+    // Handle category filtering
+    return game.categories.includes(activeFilter as GameCategory);
   });
 
   const FilterButton: React.FC<{ filter: FilterType; label: string }> = ({ filter, label }) => (
@@ -41,23 +45,30 @@ const GameCenter: React.FC<GameCenterProps> = ({ games, onSelectGame }) => {
       </p>
 
       <div className="w-full max-w-4xl text-center">
-          <div className="mb-8 flex justify-center items-center">
-              <div className="flex items-center gap-2">
-                  <FilterButton filter="all" label="All" />
-                  <FilterButton filter="available" label="Available" />
-                  <FilterButton filter="coming-soon" label="Coming Soon" />
-              </div>
-          </div>
-        <div key={activeFilter} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-left animate-fade-in">
-          {filteredGames.map(game => {
+        <div className="mb-8 flex flex-wrap justify-center items-center gap-2 sm:gap-3">
+            <FilterButton filter="all" label="All" />
+            <FilterButton filter="available" label="Available" />
+            <FilterButton filter="coming-soon" label="Coming Soon" />
+            {allCategories.map(category => (
+                <FilterButton key={category} filter={category} label={category} />
+            ))}
+        </div>
+        <div key={activeFilter} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-left">
+          {filteredGames.map((game, index) => {
             const isAvailable = game.status === 'available';
             return (
-              <div onClick={isAvailable ? () => onSelectGame(game.id) : undefined} key={game.id} className="block h-full">
+              <div
+                onClick={isAvailable ? () => onSelectGame(game.id) : undefined}
+                key={game.id}
+                className="block h-full animate-slide-up"
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
                   <GameCard
                     title={game.title}
                     description={game.description}
                     visual={game.visual}
                     status={game.status}
+                    categories={game.categories}
                   />
               </div>
             );

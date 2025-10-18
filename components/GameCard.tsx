@@ -1,13 +1,15 @@
 import React from 'react';
+import type { GameCategory } from '../lib/games';
 
 interface GameCardProps {
   title: string;
   description: string;
   visual: React.ReactNode;
   status: 'available' | 'coming-soon';
+  categories: GameCategory[];
 }
 
-const GameCard = React.forwardRef<HTMLDivElement, GameCardProps>(({ title, description, visual, status }, ref) => {
+const GameCard = React.forwardRef<HTMLDivElement, GameCardProps>(({ title, description, visual, status, categories }, ref) => {
   const isAvailable = status === 'available';
 
   return (
@@ -18,7 +20,7 @@ const GameCard = React.forwardRef<HTMLDivElement, GameCardProps>(({ title, descr
       } ${status === 'coming-soon' ? 'game-card-coming-soon' : ''}`}
     >
       {status === 'coming-soon' && (
-        <div className="absolute top-2 right-2 bg-amber-400 text-slate-900 text-xs font-bold px-2 py-1 rounded-full z-10">
+        <div className="absolute top-2 right-2 bg-amber-400 text-slate-900 text-xs font-bold px-2 py-1 rounded-full z-30">
           SOON
         </div>
       )}
@@ -26,9 +28,19 @@ const GameCard = React.forwardRef<HTMLDivElement, GameCardProps>(({ title, descr
         <div className="z-10 transform transition-transform duration-300 group-hover:scale-110">
             {visual}
         </div>
+        {status === 'coming-soon' && (
+           <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm z-20"></div>
+        )}
       </div>
       <div className="p-4 text-left flex flex-col flex-grow">
         <h2 className="text-2xl font-bold text-sky-400 mb-2">{title}</h2>
+        <div className="flex flex-wrap gap-2 mb-2">
+            {categories.map(category => (
+              <span key={category} className="px-2.5 py-1 bg-slate-800 text-sky-400 text-xs font-semibold rounded-full">
+                {category}
+              </span>
+            ))}
+        </div>
         <p className="text-neutral-400 text-sm mb-4 h-10">{description}</p>
         <div className="flex-grow"></div>
         <button
