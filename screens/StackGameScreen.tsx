@@ -218,14 +218,12 @@ const StackGameScreen: React.FC = () => {
                     to { opacity: 0; }
                 }
             `}</style>
-             <div className="absolute top-4 left-4 text-left z-20">
-                <div className="bg-slate-900/70 p-2 px-4 rounded-md">
+             <div className="absolute top-4 left-0 right-0 flex justify-center sm:justify-between gap-4 px-4 z-20">
+                <div className="bg-slate-900/70 p-2 px-4 rounded-md text-center sm:text-left">
                     <div className="text-sm text-neutral-400">SCORE</div>
                     <div className="text-3xl font-bold">{score}</div>
                 </div>
-             </div>
-             <div className="absolute top-4 right-4 text-right z-20">
-                <div className="bg-slate-900/70 p-2 px-4 rounded-md">
+                <div className="bg-slate-900/70 p-2 px-4 rounded-md text-center sm:text-right">
                     <div className="text-sm text-neutral-400">BEST</div>
                     <div className="text-3xl font-bold">{highScore}</div>
                 </div>
