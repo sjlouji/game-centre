@@ -1,4 +1,3 @@
-// FIX: Add React import to use the React.FC type.
 import React from 'react';
 import Game2048Screen from '../screens/Game2048Screen';
 

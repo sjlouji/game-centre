@@ -1,6 +1,3 @@
-
-
-// FIX: Add React import for React.FC and implement router-based navigation to handle game selection.
 import React from 'react';
 import { useRouter } from 'next/router';
 import GameCenter from '../screens/GameCenter';

@@ -17,7 +17,7 @@
     </a>
     <img alt="Language: TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
     <img alt="Framework: React" src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black" />
-    <img alt="Build Tool: Vite" src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white" />
+    <img alt="Framework: Next.js" src="https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white" />
     <img alt="Styling: Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white" />
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
   </p>
@@ -27,7 +27,7 @@
 
 <h2>🎮 What is this app?</h2>
 
-Game Center is a polished, modern hub for classic web games, rebuilt from the ground up using React, TypeScript, and Tailwind CSS. This project showcases a clean user interface, fluid animations, and a collection of addictive games, all wrapped in a scalable architecture that's easy to expand.
+Game Center is a polished, modern hub for classic web games, rebuilt from the ground up using Next.js, React, TypeScript, and Tailwind CSS. This project showcases a clean user interface, fluid animations, and a collection of addictive games, all wrapped in a scalable architecture that's easy to expand.
 
 <hr />
 
@@ -45,7 +45,9 @@ Game Center is a polished, modern hub for classic web games, rebuilt from the gr
 
 A huge thank you to all our contributors!
 
-*(This section will be updated as contributions are made.)*
+<a href="https://github.com/reflex-dev/reflex/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=sjlouji/Game-space" />
+</a>
 
 <hr />
 
@@ -66,7 +68,7 @@ A huge thank you to all our contributors!
     ```sh
     npm run dev
     ```
-    This will start the Vite development server. Open the URL it provides in your browser!
+    This will start the Next.js development server. Open http://localhost:3000 in your browser!
 
 <hr />
 
@@ -76,11 +78,11 @@ A huge thank you to all our contributors!
 /
 ├── components/         # Reusable React components (Header, Modals, etc.)
 ├── lib/                # Shared utilities, types, and constants
-├── screens/            # Top-level screen components (GameCenter, Game2048Screen)
-├── App.tsx             # Main application component
-├── index.html          # Entry point HTML file (Vite)
-├── index.tsx           # Main React render script
-└── vite.config.ts      # Vite configuration
+├── pages/              # Next.js pages for routing (_app, _document, game pages)
+├── screens/            # Top-level screen components used by pages
+├── styles/             # Global stylesheets
+├── next.config.js      # Next.js configuration
+└── tsconfig.json       # TypeScript configuration
 ```
 
 <hr />

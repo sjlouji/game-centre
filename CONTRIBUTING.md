@@ -28,7 +28,7 @@ npm install
 ```bash
 npm run dev
 ```
-This will start the Vite development server. Open the URL it provides (usually `http://localhost:5173`) in your browser to see the app running. All changes you make to the source code will be reflected in your running app.
+This will start the Next.js development server. Open http://localhost:3000 in your browser to see the app running. All changes you make to the source code will be reflected in your running app.
 
 ## 🧪 Testing and QA
 
