@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import GameCenter from './screens/GameCenter';
 import Game2048Screen from './screens/Game2048Screen';
 import DinoGameScreen from './screens/DinoGameScreen';
-import PaperTossScreen from './screens/PaperTossScreen';
+import TicTacToeScreen from './screens/TicTacToeScreen';
 import AppHeader from './components/AppHeader';
 import { Game, GameId, GAMES } from './lib/games';
 
@@ -29,8 +29,8 @@ const App: React.FC = () => {
         return <Game2048Screen />;
       case 'dino':
         return <DinoGameScreen />;
-      case 'paper-toss':
-        return <PaperTossScreen />;
+      case 'tic-tac-toe':
+        return <TicTacToeScreen />;
       default:
         return <GameCenter games={GAMES} onSelectGame={(gameId) => handleNavigation(gameId)} />;
     }

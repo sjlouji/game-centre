@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'paper-toss';
+export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'tic-tac-toe';
 export type GameCategory = 'Puzzle' | 'Strategy' | 'Classic' | 'Arcade' | 'Endless Runner' | 'Skill';
 
 export interface Game {
@@ -57,28 +57,28 @@ export const GAMES: Game[] = [
     ),
   },
   {
-    id: 'paper-toss',
-    title: 'Paper Toss',
-    description: 'Flick the paper into the bin, but watch out for the fan!',
+    id: 'tic-tac-toe',
+    title: 'Tic Tac Toe',
+    description: 'Classic Xs and Os. Can you get three in a row?',
     status: 'available',
-    categories: ['Arcade', 'Skill', 'Classic'],
+    categories: ['Classic', 'Puzzle', 'Strategy'],
     visual: React.createElement(
       'div',
-      { className: 'w-24 h-24 flex flex-col items-center justify-center' },
-      React.createElement(
-        'div',
-        { className: 'w-8 h-8 rounded-full bg-slate-300' },
-        React.createElement('div', {className: 'w-3 h-3 rounded-full bg-slate-400/50 relative top-2 left-2'})
-      ),
-      React.createElement(
-        'div',
-        { className: 'w-16 h-1 bg-slate-600 my-2' }
-      ),
-       React.createElement(
-        'div',
-        { className: 'w-10 h-12 border-2 border-slate-500 rounded-t-md border-b-0' }
-      ),
-    ),
+      { className: 'w-20 h-20 grid grid-cols-3 grid-rows-3 relative' },
+       React.createElement('div', { className: 'flex items-center justify-center text-sky-400 text-3xl font-bold' }, 'X'),
+      React.createElement('div', {}),
+      React.createElement('div', { className: 'flex items-center justify-center text-rose-400 text-3xl font-bold' }, 'O'),
+      React.createElement('div', { className: 'flex items-center justify-center text-rose-400 text-3xl font-bold' }, 'O'),
+      React.createElement('div', { className: 'flex items-center justify-center text-sky-400 text-3xl font-bold' }, 'X'),
+      React.createElement('div', {}),
+      React.createElement('div', {}),
+      React.createElement('div', { className: 'flex items-center justify-center text-sky-400 text-3xl font-bold' }, 'X'),
+      React.createElement('div', { className: 'flex items-center justify-center text-rose-400 text-3xl font-bold' }, 'O'),
+      React.createElement('div', { className: 'absolute top-0 left-[33.33%] w-0.5 h-full bg-slate-600' }),
+      React.createElement('div', { className: 'absolute top-0 left-[66.66%] w-0.5 h-full bg-slate-600' }),
+      React.createElement('div', { className: 'absolute left-0 top-[33.33%] h-0.5 w-full bg-slate-600' }),
+      React.createElement('div', { className: 'absolute left-0 top-[66.66%] h-0.5 w-full bg-slate-600' }),
+    )
   },
   {
     id: 'stickman',
