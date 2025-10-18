@@ -214,9 +214,11 @@ const DinoGameScreen: React.FC = () => {
   }, [animate]);
   
   useEffect(() => {
-    const savedHighScore = localStorage.getItem('dino-highscore');
-    if(savedHighScore) {
-      highScore.current = parseInt(savedHighScore, 10);
+    if (typeof window !== 'undefined') {
+      const savedHighScore = localStorage.getItem('dino-highscore');
+      if(savedHighScore) {
+        highScore.current = parseInt(savedHighScore, 10);
+      }
     }
     resetGame();
     return () => {

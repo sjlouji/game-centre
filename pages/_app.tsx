@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Game Center</title>
+        <title>GCADE</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="A fully functional game center built with Next.js, React, TypeScript, and Tailwind CSS." />
       </Head>

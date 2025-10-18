@@ -10,7 +10,7 @@ const WinOverlay: React.FC<WinOverlayProps> = ({ onContinue, onNewGame }) => {
   const [shareText, setShareText] = useState('Share');
 
   const handleShare = () => {
-    const message = `I beat 2048! Time to go for 4096... #ReactGameCenter`;
+    const message = `I beat 2048! Time to go for 4096... #GCADE`;
     navigator.clipboard.writeText(message).then(() => {
       setShareText('Copied!');
       setTimeout(() => setShareText('Share'), 2000);

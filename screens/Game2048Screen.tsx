@@ -51,6 +51,8 @@ const Game2048Screen: React.FC = () => {
 
   // Load stats from localStorage
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const savedHighScore = localStorage.getItem('2048-highscore');
     setHighScore(savedHighScore ? parseInt(savedHighScore, 10) : 0);
     const savedHighestTile = localStorage.getItem('2048-highestTile');
@@ -165,7 +167,7 @@ const Game2048Screen: React.FC = () => {
 
   useEffect(() => {
     startNewGame();
-  }, []);
+  }, [startNewGame]);
 
   const move = useCallback(
     (direction: 'up' | 'down' | 'left' | 'right') => {

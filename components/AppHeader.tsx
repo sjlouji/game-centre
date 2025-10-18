@@ -9,7 +9,7 @@ const Logo: React.FC = () => (
       <path d="M18 20H2C0.895431 20 0 20.8954 0 22V38C0 39.1046 0.895431 40 2 40H18C19.1046 40 20 39.1046 20 38V22C20 20.8954 19.1046 20 18 20Z" fill="#FB7185"/>
       <path d="M38 20H22C20.8954 20 20 20.8954 20 22V38C20 39.1046 20.8954 40 22 40H38C39.1046 40 40 39.1046 40 38V22C40 20.8954 39.1046 20 38 20Z" fill="#4ADE80"/>
     </svg>
-    <span className="text-2xl font-bold text-neutral-50 font-heading">Game Center</span>
+    <span className="text-2xl font-bold text-neutral-50 font-heading">GCADE</span>
   </div>
 );
 
@@ -29,7 +29,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ activeGame, onBack }) => {
             <Logo />
           </div>
         ) : (
-          <button onClick={onBack} className="text-xl text-neutral-400 hover:text-neutral-50 transition-all flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 active:scale-90" aria-label="Back to Game Center">
+          <button onClick={onBack} className="text-xl text-neutral-400 hover:text-neutral-50 transition-all flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 active:scale-90" aria-label="Back to GCADE">
             <span>&larr;</span>
           </button>
         )}

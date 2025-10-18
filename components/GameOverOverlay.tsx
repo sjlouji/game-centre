@@ -10,7 +10,7 @@ const GameOverOverlay: React.FC<GameOverOverlayProps> = ({ score, onRestart }) =
   const [shareText, setShareText] = useState('Share');
 
   const handleShare = () => {
-    const message = `I scored ${score} in 2048! Can you beat it? #ReactGameCenter`;
+    const message = `I scored ${score} in 2048! Can you beat it? #GCADE`;
     navigator.clipboard.writeText(message).then(() => {
       setShareText('Copied!');
       setTimeout(() => setShareText('Share'), 2000);

@@ -1,10 +1,10 @@
-# Contributing to Game Center
+# Contributing to GCADE
 
-First off, thank you for considering contributing to Game Center! It's people like you that make this project great. Every contribution is valuable.
+First off, thank you for considering contributing to GCADE! It's people like you that make this project great. Every contribution is valuable.
 
 ## Running a Local Build
 
-Here is a quick guide on how to run the Game Center repo locally so you can start contributing to the project.
+Here is a quick guide on how to run the GCADE repo locally so you can start contributing to the project.
 
 **Prerequisites:**
 - Node.js (v18 or higher)
@@ -15,8 +15,8 @@ Fork this repository by clicking on the `Fork` button on the top right of the pa
 
 **2. Clone your forked repository and navigate into the directory:**
 ```bash
-git clone https://github.com/<YOUR-USERNAME>/game-center.git
-cd game-center
+git clone https://github.com/<YOUR-USERNAME>/gcade.git
+cd gcade
 ```
 
 **3. Install the project dependencies:**
@@ -57,4 +57,4 @@ Before submitting a pull request, please ensure the following steps are taken:
 3.  **Commit your changes:** Use clear and descriptive commit messages.
 4.  **Submit the PR:** Push your changes to your fork and open a pull request against the `main` branch of the original repository.
 
-That's it! Thanks for contributing to Game Center!
+That's it! Thanks for contributing to GCADE!
