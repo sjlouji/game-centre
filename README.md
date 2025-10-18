@@ -41,6 +41,9 @@ GCADE is a polished, modern hub for classic web games, rebuilt from the ground u
 | ---------------- | -------------- | ---------------------------------------------- |
 | **2048**         | ✅ Available   | Join the numbers to get the 2048 tile!         |
 | **Pixel Dino Run** | ✅ Available   | Jump over obstacles and run as far as you can!   |
+| **Tic Tac Toe**    | ✅ Available   | Classic Xs and Os. Can you get three in a row? |
+| **Block Fall**     | ✅ Available   | Classic falling block puzzle. Clear lines to score! |
+| **Stack Tower**    | ✅ Available   | Tap to place blocks and build the tallest tower! |
 | **Stickman Hook**  | 🚧 Coming Soon | Swing through levels with your grappling hook! |
 | **Bouncing Ball**  | 🚧 Coming Soon | Navigate your ball through tricky obstacles.   |
 
