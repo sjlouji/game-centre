@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'tic-tac-toe';
+export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'tic-tac-toe' | 'block-fall';
 export type GameCategory = 'Puzzle' | 'Strategy' | 'Classic' | 'Arcade' | 'Endless Runner' | 'Skill';
 
 export interface Game {
@@ -78,6 +78,23 @@ export const GAMES: Game[] = [
       React.createElement('div', { className: 'absolute top-0 left-[66.66%] w-0.5 h-full bg-slate-600' }),
       React.createElement('div', { className: 'absolute left-0 top-[33.33%] h-0.5 w-full bg-slate-600' }),
       React.createElement('div', { className: 'absolute left-0 top-[66.66%] h-0.5 w-full bg-slate-600' }),
+    )
+  },
+  {
+    id: 'block-fall',
+    title: 'Block Fall',
+    description: 'Classic falling block puzzle. Clear lines to score!',
+    status: 'available',
+    categories: ['Classic', 'Puzzle', 'Arcade'],
+    visual: React.createElement(
+      'div',
+      { className: 'w-24 h-24 p-2 grid grid-cols-4 grid-rows-4 gap-1' },
+      // T piece (purple)
+      React.createElement('div', { className: 'col-start-1 col-span-3 bg-purple-400 rounded-sm' }),
+      React.createElement('div', { className: 'row-start-2 col-start-2 bg-purple-400 rounded-sm' }),
+      // S piece (green)
+      React.createElement('div', { className: 'row-start-3 col-start-2 col-span-2 bg-emerald-400 rounded-sm' }),
+      React.createElement('div', { className: 'row-start-4 col-start-1 col-span-2 bg-emerald-400 rounded-sm' }),
     )
   },
   {

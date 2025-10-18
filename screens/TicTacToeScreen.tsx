@@ -59,9 +59,11 @@ const TicTacToeScreen: React.FC = () => {
   const Square = ({ value, onClick, isWinning }: { value: 'X' | 'O' | null; onClick: () => void; isWinning: boolean }) => (
     <button
       className={`w-24 h-24 sm:w-32 sm:h-32 bg-slate-800 flex items-center justify-center rounded-lg shadow-inner transition-all duration-200
+        active:scale-95 active:bg-slate-600 disabled:cursor-not-allowed
         ${isWinning ? 'bg-slate-700' : 'hover:bg-slate-700'}
         ${value === 'X' ? 'text-sky-400' : 'text-rose-400'}`}
       onClick={onClick}
+      disabled={!!value || !!gameResult}
     >
       <span className={`text-6xl sm:text-7xl font-bold font-heading transform transition-transform duration-200 ${value ? 'scale-100' : 'scale-0'}`}>
         {value}
@@ -79,19 +81,32 @@ const TicTacToeScreen: React.FC = () => {
           border-radius: 4px;
           animation: draw-strike 0.4s ease-out forwards;
         }
+        
+        /* Base animations for non-centered lines */
         @keyframes draw-strike { from { transform: scaleX(0); } to { transform: scaleX(1); } }
         @keyframes draw-strike-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
         
-        .strike-row-1 { width: 90%; top: 16.66%; left: 5%; transform-origin: left; }
-        .strike-row-2 { width: 90%; top: 50%; left: 5%; transform: translateY(-50%) scaleX(0); transform-origin: left; }
-        .strike-row-3 { width: 90%; bottom: 16.66%; left: 5%; transform-origin: left; }
-        
-        .strike-col-1 { height: 90%; width: 8px; left: 16.66%; top: 5%; transform-origin: top; animation-name: draw-strike-y; }
-        .strike-col-2 { height: 90%; width: 8px; left: 50%; top: 5%; transform: translateX(-50%) scaleY(0); transform-origin: top; animation-name: draw-strike-y; }
-        .strike-col-3 { height: 90%; width: 8px; right: 16.66%; top: 5%; transform-origin: top; animation-name: draw-strike-y; }
+        /* New keyframes for centered and diagonal strikes that include full transform */
+        @keyframes draw-strike-row-2 { from { transform: translate(-50%, -50%) scaleX(0); } to { transform: translate(-50%, -50%) scaleX(1); } }
+        @keyframes draw-strike-col-2 { from { transform: translate(-50%, -50%) scaleY(0); } to { transform: translate(-50%, -50%) scaleY(1); } }
+        @keyframes draw-strike-diag-1 { from { transform: translate(-50%, -50%) rotate(45deg) scaleX(0); } to { transform: translate(-50%, -50%) rotate(45deg) scaleX(1); } }
+        @keyframes draw-strike-diag-2 { from { transform: translate(-50%, -50%) rotate(-45deg) scaleX(0); } to { transform: translate(-50%, -50%) rotate(-45deg) scaleX(1); } }
 
-        .strike-diag-1 { width: 120%; top: 50%; left: -10%; transform: translateY(-50%) rotate(45deg) scaleX(0); transform-origin: left; }
-        .strike-diag-2 { width: 120%; top: 50%; right: -10%; transform: translateY(-50%) rotate(-45deg) scaleX(0); transform-origin: right; }
+        /* --- Line Styles --- */
+        
+        /* Rows */
+        .strike-row-1 { width: 90%; top: 16.66%; left: 5%; transform: translateY(-50%); transform-origin: left; }
+        .strike-row-2 { width: 90%; top: 50%; left: 50%; transform-origin: center; animation-name: draw-strike-row-2; transform: translate(-50%, -50%); }
+        .strike-row-3 { width: 90%; top: 83.33%; left: 5%; transform: translateY(-50%); transform-origin: left; }
+        
+        /* Columns */
+        .strike-col-1 { height: 90%; width: 8px; left: 16.66%; top: 5%; transform: translateX(-50%); transform-origin: top; animation-name: draw-strike-y; }
+        .strike-col-2 { height: 90%; width: 8px; left: 50%; top: 50%; transform-origin: center; animation-name: draw-strike-col-2; transform: translate(-50%, -50%); }
+        .strike-col-3 { height: 90%; width: 8px; right: 16.66%; top: 5%; transform: translateX(50%); transform-origin: top; animation-name: draw-strike-y; }
+
+        /* Diagonals */
+        .strike-diag-1 { width: 120%; top: 50%; left: 50%; transform-origin: center; animation-name: draw-strike-diag-1; transform: translate(-50%, -50%) rotate(45deg); }
+        .strike-diag-2 { width: 120%; top: 50%; left: 50%; transform-origin: center; animation-name: draw-strike-diag-2; transform: translate(-50%, -50%) rotate(-45deg); }
       `}</style>
        <div className="text-center mb-8">
         <h2 className="text-3xl sm:text-4xl font-bold text-neutral-300 transition-colors duration-300">
