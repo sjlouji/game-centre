@@ -24,6 +24,30 @@ const calculateWinner = (squares: Array<'X' | 'O' | null>) => {
   return null;
 };
 
+// FIX: Refactored props to a type alias to fix type inference issue.
+type SquareProps = {
+  value: 'X' | 'O' | null;
+  onClick: () => void;
+  isWinning: boolean;
+  isGameOver: boolean;
+};
+
+// FIX: Explicitly type the 'Square' component as a React.FC to correctly handle React's special 'key' prop and resolve the TypeScript error.
+const Square: React.FC<SquareProps> = ({ value, onClick, isWinning, isGameOver }) => (
+  <button
+    className={`w-24 h-24 sm:w-32 sm:h-32 bg-slate-800 flex items-center justify-center rounded-lg shadow-inner transition-all duration-200
+      active:scale-95 active:bg-slate-600 disabled:cursor-not-allowed
+      ${isWinning ? 'bg-slate-700' : 'hover:bg-slate-700'}
+      ${value === 'X' ? 'text-sky-400' : 'text-rose-400'}`}
+    onClick={onClick}
+    disabled={!!value || isGameOver}
+  >
+    <span className={`text-6xl sm:text-7xl font-bold font-heading transform transition-transform duration-200 ${value ? 'scale-100' : 'scale-0'}`}>
+      {value}
+    </span>
+  </button>
+);
+
 const TicTacToeScreen: React.FC = () => {
   const [board, setBoard] = useState<Array<'X' | 'O' | null>>(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
@@ -55,21 +79,6 @@ const TicTacToeScreen: React.FC = () => {
     }
     return `Next player: ${xIsNext ? 'X' : 'O'}`;
   };
-
-  const Square = ({ value, onClick, isWinning }: { value: 'X' | 'O' | null; onClick: () => void; isWinning: boolean }) => (
-    <button
-      className={`w-24 h-24 sm:w-32 sm:h-32 bg-slate-800 flex items-center justify-center rounded-lg shadow-inner transition-all duration-200
-        active:scale-95 active:bg-slate-600 disabled:cursor-not-allowed
-        ${isWinning ? 'bg-slate-700' : 'hover:bg-slate-700'}
-        ${value === 'X' ? 'text-sky-400' : 'text-rose-400'}`}
-      onClick={onClick}
-      disabled={!!value || !!gameResult}
-    >
-      <span className={`text-6xl sm:text-7xl font-bold font-heading transform transition-transform duration-200 ${value ? 'scale-100' : 'scale-0'}`}>
-        {value}
-      </span>
-    </button>
-  );
 
   return (
     <div className="flex flex-col items-center justify-center w-full flex-grow animate-fade-in p-4">
@@ -121,6 +130,7 @@ const TicTacToeScreen: React.FC = () => {
             value={square}
             onClick={() => handleClick(i)}
             isWinning={gameResult?.line.includes(i) ?? false}
+            isGameOver={!!gameResult}
           />
         ))}
         {gameResult && <div className={`strike ${gameResult.lineClass}`}></div>}

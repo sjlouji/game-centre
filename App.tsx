@@ -5,6 +5,7 @@ import Game2048Screen from './screens/Game2048Screen';
 import DinoGameScreen from './screens/DinoGameScreen';
 import TicTacToeScreen from './screens/TicTacToeScreen';
 import BlockFallScreen from './screens/BlockFallScreen';
+import StackGameScreen from './screens/StackGameScreen';
 import AppHeader from './components/AppHeader';
 import { Game, GameId, GAMES } from './lib/games';
 
@@ -34,6 +35,8 @@ const App: React.FC = () => {
         return <TicTacToeScreen />;
       case 'block-fall':
         return <BlockFallScreen />;
+      case 'stack':
+        return <StackGameScreen />;
       default:
         return <GameCenter games={GAMES} onSelectGame={(gameId) => handleNavigation(gameId)} />;
     }

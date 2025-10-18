@@ -1,6 +1,7 @@
+
 import React from 'react';
 
-export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'tic-tac-toe' | 'block-fall';
+export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'tic-tac-toe' | 'block-fall' | 'stack';
 export type GameCategory = 'Puzzle' | 'Strategy' | 'Classic' | 'Arcade' | 'Endless Runner' | 'Skill';
 
 export interface Game {
@@ -95,6 +96,25 @@ export const GAMES: Game[] = [
       // S piece (green)
       React.createElement('div', { className: 'row-start-3 col-start-2 col-span-2 bg-emerald-400 rounded-sm' }),
       React.createElement('div', { className: 'row-start-4 col-start-1 col-span-2 bg-emerald-400 rounded-sm' }),
+    )
+  },
+  {
+    id: 'stack',
+    title: 'Stack Tower',
+    description: 'Tap to place blocks and build the tallest tower!',
+    status: 'available',
+    categories: ['Arcade', 'Skill'],
+    visual: React.createElement(
+      'div',
+      { style: { perspective: '100px' }, className: 'w-20 h-20 flex items-end justify-center' },
+      React.createElement(
+        'div',
+        { style: { transform: 'rotateX(20deg)', transformStyle: 'preserve-3d' }, className: 'relative w-full h-full' },
+        React.createElement('div', { style: { position: 'absolute', bottom: '10px', left: '10%', width: '80%', height: '1rem', backgroundColor: '#38bdf8' }, className: 'rounded-sm' }),
+        React.createElement('div', { style: { position: 'absolute', bottom: 'calc(10px + 1rem)', left: '15%', width: '70%', height: '1rem', backgroundColor: '#4ade80' }, className: 'rounded-sm' }),
+        React.createElement('div', { style: { position: 'absolute', bottom: 'calc(10px + 2rem)', left: '20%', width: '60%', height: '1rem', backgroundColor: '#facc15' }, className: 'rounded-sm' }),
+        React.createElement('div', { style: { position: 'absolute', bottom: 'calc(10px + 3rem)', left: '25%', width: '50%', height: '1rem', backgroundColor: '#fb7185' }, className: 'rounded-sm' })
+      )
     )
   },
   {
