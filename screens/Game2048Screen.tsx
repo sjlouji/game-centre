@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import GameBoard from '../components/GameBoard';
 import Header from '../components/Header';
 import GameOverOverlay from '../components/GameOverOverlay';
@@ -15,10 +15,10 @@ const triggerHaptic = (pattern: number | number[]) => {
 };
 
 const Game2048Screen: React.FC = () => {
-  let tileIdCounter = 1;
+  const tileIdCounter = useRef(1);
 
   const createTile = (row: number, col: number, value: number, isNew: boolean = false): TileType => ({
-    id: tileIdCounter++,
+    id: tileIdCounter.current++,
     value,
     row,
     col,
@@ -135,7 +135,7 @@ const Game2048Screen: React.FC = () => {
     const value = Math.random() < 0.9 ? 2 : 4;
     const newTile = createTile(row, col, value, true);
     return [...currentTiles, newTile];
-  }, [getEmptyCells]);
+  }, [getEmptyCells, createTile]);
 
   const canMove = useCallback((currentTiles: TileType[]) => {
     const grid = toGrid(currentTiles);
@@ -152,7 +152,7 @@ const Game2048Screen: React.FC = () => {
   }, [getEmptyCells]);
 
   const startNewGame = useCallback(() => {
-    tileIdCounter = 1;
+    tileIdCounter.current = 1;
     setScore(0);
     setMoves(0);
     setGameOver(false);
