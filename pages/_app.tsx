@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import AppHeader from '../components/AppHeader';
 import type { GameId } from '../lib/games';
 import '../styles/globals.css';
+import { Analytics } from '@vercel/analytics/next';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -28,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </main>
       </div>
+      <Analytics />
     </>
   );
 }
