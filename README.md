@@ -63,7 +63,7 @@ GCADE is a polished, modern hub for classic web games, rebuilt from the ground u
     ```sh
     npm run dev
     ```
-    This will start the Next.js development server. Open http://localhost:3000 in your browser!
+    This will start the Next.js development server.  Open http://localhost:3000 in your browser!
 
 <hr />
 
