@@ -105,6 +105,80 @@
         to { transform: translateY(0); opacity: 1; }
       }
       .animate-slide-up { animation: slideUp 0.4s ease-out 0.1s forwards; opacity: 0; }
+
+      /* --- Connect Four Animations --- */
+      @keyframes drop-in {
+        from { transform: translateY(var(--drop-distance, -400px)); }
+        to { transform: translateY(0); }
+      }
+      .animate-drop-in {
+        animation: drop-in 0.5s cubic-bezier(0.5, 0, 0.75, 1.25) forwards;
+      }
+
+      @keyframes pulse-win {
+        0%, 100% { transform: scale(1.05); box-shadow: 0 0 12px 3px rgba(255, 255, 255, 0.8); }
+        50% { transform: scale(0.95); box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.5); }
+      }
+      .animate-pulse-win {
+        animation: pulse-win 1.5s infinite ease-in-out;
+      }
+      
+      /* --- Sudoku Styles --- */
+      .sudoku-grid {
+        display: grid;
+        grid-template-columns: repeat(9, minmax(0, 1fr));
+        gap: 1px;
+        background-color: #475569; /* slate-600 */
+        border: 2px solid #475569;
+        padding: 2px;
+        border-radius: 6px;
+      }
+      .sudoku-grid > div:nth-child(3n) { border-right: 2px solid #475569; }
+      .sudoku-grid > div:nth-child(n+19):nth-child(-n+27),
+      .sudoku-grid > div:nth-child(n+46):nth-child(-n+54) {
+        border-bottom: 2px solid #475569;
+      }
+
+      @keyframes number-pop {
+        0% { transform: scale(0.8); opacity: 0.5; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .animate-number-pop { animation: number-pop 0.2s ease-out; }
+
+      /* --- Memory Match Styles --- */
+      .memory-card {
+        perspective: 1000px;
+        transform-style: preserve-3d;
+      }
+      .memory-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+      .memory-card.flipped .memory-card-inner {
+        transform: rotateY(180deg);
+      }
+      .memory-card-front, .memory-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 0.5rem;
+      }
+      .memory-card-back {
+        transform: rotateY(180deg);
+      }
+      @keyframes match-jiggle {
+        0%, 100% { transform: scale(1); }
+        25% { transform: scale(1.1) rotate(-5deg); }
+        75% { transform: scale(1.1) rotate(5deg); }
+      }
+      .animate-match {
+        animation: match-jiggle 0.4s ease-in-out;
+      }
     </style>
   <script type="importmap">
 {

@@ -1,8 +1,8 @@
 
 import React from 'react';
 
-export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'tic-tac-toe' | 'block-fall' | 'stack';
-export type GameCategory = 'Puzzle' | 'Strategy' | 'Classic' | 'Arcade' | 'Endless Runner' | 'Skill';
+export type GameId = '2048' | 'dino' | 'stickman' | 'bouncing-ball' | 'tic-tac-toe' | 'block-fall' | 'stack' | 'minesweeper' | 'snake' | 'connect-four' | 'flappy-bird' | 'sudoku' | 'memory-match';
+export type GameCategory = 'Puzzle' | 'Strategy' | 'Classic' | 'Arcade' | 'Endless Runner' | 'Skill' | 'Memory';
 
 export interface Game {
   id: GameId;
@@ -116,6 +116,131 @@ export const GAMES: Game[] = [
         React.createElement('div', { style: { position: 'absolute', bottom: 'calc(10px + 3rem)', left: '25%', width: '50%', height: '1rem', backgroundColor: '#fb7185' }, className: 'rounded-sm' })
       )
     )
+  },
+  {
+    id: 'minesweeper',
+    title: 'Minesweeper',
+    description: 'Clear the board without hitting any mines. A true classic!',
+    status: 'available',
+    categories: ['Puzzle', 'Strategy', 'Classic'],
+    visual: React.createElement(
+      'div',
+      { className: 'w-24 h-24 p-2 grid grid-cols-4 grid-rows-4 gap-1' },
+      React.createElement('div', { className: 'bg-slate-700 rounded-sm' }),
+      React.createElement('div', { className: 'bg-slate-600 rounded-sm flex items-center justify-center text-sky-400 font-bold' }, '1'),
+      React.createElement('div', { className: 'bg-slate-700 rounded-sm flex items-center justify-center text-sm' }, '🚩'),
+      React.createElement('div', { className: 'bg-slate-600 rounded-sm' }),
+      React.createElement('div', { className: 'bg-slate-600 rounded-sm flex items-center justify-center text-emerald-400 font-bold' }, '2'),
+      React.createElement('div', { className: 'bg-slate-600 rounded-sm' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-sm' }),
+      React.createElement('div', { className: 'bg-slate-600 rounded-sm' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-sm' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-sm' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-sm flex items-center justify-center text-sm' }, '🚩'),
+      React.createElement('div', { className: 'bg-slate-600 rounded-sm' }),
+    )
+  },
+  {
+    id: 'snake',
+    title: 'Snake',
+    description: 'Eat the food, grow your snake, and avoid the walls!',
+    status: 'available',
+    categories: ['Arcade', 'Classic', 'Skill'],
+    visual: React.createElement(
+      'div',
+      { className: 'w-24 h-20 p-2 relative' },
+      React.createElement('div', { className: 'absolute top-8 left-4 w-4 h-4 bg-emerald-400 rounded-sm' }),
+      React.createElement('div', { className: 'absolute top-8 left-8 w-4 h-4 bg-emerald-400 rounded-sm' }),
+      React.createElement('div', { className: 'absolute top-8 left-12 w-4 h-4 bg-emerald-400 rounded-sm' }),
+      React.createElement('div', { className: 'absolute top-4 left-12 w-4 h-4 bg-emerald-400 rounded-sm' }),
+      React.createElement('div', { className: 'absolute top-12 right-6 w-3 h-3 bg-rose-400 rounded-full' })
+    )
+  },
+  {
+    id: 'connect-four',
+    title: 'Connect Four',
+    description: 'Drop your discs and be the first to get four in a row!',
+    status: 'available',
+    categories: ['Strategy', 'Classic', 'Puzzle'],
+    visual: React.createElement(
+      'div',
+      { className: 'w-24 h-20 p-2 grid grid-cols-5 gap-1' },
+      // Simple representation
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      React.createElement('div', { className: 'bg-rose-500 rounded-full' }),
+      React.createElement('div', { className: 'bg-yellow-400 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      // row 2
+      React.createElement('div', { className: 'bg-rose-500 rounded-full' }),
+      React.createElement('div', { className: 'bg-yellow-400 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      React.createElement('div', { className: 'bg-rose-500 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      // row 3
+      React.createElement('div', { className: 'bg-yellow-400 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      React.createElement('div', { className: 'bg-rose-500 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      React.createElement('div', { className: 'bg-yellow-400 rounded-full' }),
+       // row 4
+      React.createElement('div', { className: 'bg-rose-500 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+      React.createElement('div', { className: 'bg-yellow-400 rounded-full' }),
+      React.createElement('div', { className: 'bg-rose-500 rounded-full' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-full' }),
+    )
+  },
+  {
+    id: 'flappy-bird',
+    title: 'Flappy Bird',
+    description: 'Tap to flap your way through the pipes. How far can you get?',
+    status: 'available',
+    categories: ['Arcade', 'Skill'],
+    visual: React.createElement(
+      'div',
+      { className: 'w-24 h-20 p-2 relative overflow-hidden flex items-center' },
+      React.createElement('div', { className: 'w-full h-full bg-sky-300' }),
+      // Bird
+      React.createElement('div', { className: 'absolute top-[45%] left-4 w-6 h-5 bg-yellow-400 rounded-md -rotate-12 border-2 border-slate-900' }),
+      // Pipe
+      React.createElement('div', { className: 'absolute top-0 right-4 w-8 h-[35%] bg-emerald-500 border-x-2 border-t-2 border-slate-900' }),
+      React.createElement('div', { className: 'absolute bottom-0 right-4 w-8 h-[35%] bg-emerald-500 border-x-2 border-b-2 border-slate-900' })
+    )
+  },
+  {
+    id: 'sudoku',
+    title: 'Sudoku',
+    description: 'A classic logic puzzle. Fill the grid with numbers 1-9.',
+    status: 'coming-soon',
+    categories: ['Puzzle', 'Strategy', 'Classic'],
+    visual: React.createElement(
+      'div', { className: 'w-20 h-20 grid grid-cols-3 grid-rows-3 gap-0.5 bg-slate-600 p-1 rounded' },
+      ...Array.from({ length: 9 }).map((_, i) =>
+        React.createElement('div', {
+          key: i,
+          className: 'bg-slate-800 flex items-center justify-center text-sky-400/50 text-xs',
+        }, ((i * 3) % 8 + 1))
+      )
+    ),
+  },
+  {
+    id: 'memory-match',
+    title: 'Memory Match',
+    description: 'Flip cards and find all the matching pairs. Test your recall!',
+    status: 'coming-soon',
+    categories: ['Memory', 'Puzzle', 'Classic'],
+    visual: React.createElement(
+      'div', { className: 'w-24 h-20 p-2 grid grid-cols-4 grid-rows-2 gap-2' },
+      React.createElement('div', { className: 'bg-sky-500 rounded-md text-2xl flex items-center justify-center' }, '🧠'),
+      React.createElement('div', { className: 'bg-slate-700 rounded-md' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-md' }),
+      React.createElement('div', { className: 'bg-sky-500 rounded-md text-2xl flex items-center justify-center' }, '🧠'),
+      React.createElement('div', { className: 'bg-slate-700 rounded-md' }),
+      React.createElement('div', { className: 'bg-emerald-500 rounded-md text-2xl flex items-center justify-center' }, '🕹️'),
+      React.createElement('div', { className: 'bg-slate-700 rounded-md' }),
+      React.createElement('div', { className: 'bg-slate-700 rounded-md' }),
+    ),
   },
   {
     id: 'stickman',

@@ -6,8 +6,14 @@ import DinoGameScreen from './screens/DinoGameScreen';
 import TicTacToeScreen from './screens/TicTacToeScreen';
 import BlockFallScreen from './screens/BlockFallScreen';
 import StackGameScreen from './screens/StackGameScreen';
+import MinesweeperScreen from './screens/MinesweeperScreen';
+import SnakeScreen from './screens/SnakeScreen';
 import AppHeader from './components/AppHeader';
 import { Game, GameId, GAMES } from './lib/games';
+import ConnectFourScreen from './screens/ConnectFourScreen';
+import FlappyBirdScreen from './screens/FlappyBirdScreen';
+import SudokuScreen from './screens/SudokuScreen';
+import MemoryMatchScreen from './screens/MemoryMatchScreen';
 
 const App: React.FC = () => {
   const [activeGame, setActiveGame] = useState<GameId | 'menu'>('menu');
@@ -37,6 +43,18 @@ const App: React.FC = () => {
         return <BlockFallScreen />;
       case 'stack':
         return <StackGameScreen />;
+      case 'minesweeper':
+        return <MinesweeperScreen />;
+      case 'snake':
+        return <SnakeScreen />;
+      case 'connect-four':
+        return <ConnectFourScreen />;
+      case 'flappy-bird':
+        return <FlappyBirdScreen />;
+      case 'sudoku':
+        return <SudokuScreen />;
+      case 'memory-match':
+        return <MemoryMatchScreen />;
       default:
         return <GameCenter games={GAMES} onSelectGame={(gameId) => handleNavigation(gameId)} />;
     }
